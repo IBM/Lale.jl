@@ -159,5 +159,5 @@ Lale>      # shows that Lale is the active project
 [travis-img]: https://travis-ci.com/IBM/Lale.jl.svg?branch=main
 [travis-url]: https://travis-ci.com/IBM/Lale.jl
 
-[codecov-img]: https://codecov.io/gh/IBM/Lale.jl/branch/master/graph/badge.svg
+[codecov-img]: https://codecov.io/gh/IBM/Lale.jl/branch/main/graph/badge.svg?token=YK62W9KQ2T
 [codecov-url]: https://codecov.io/gh/IBM/Lale.jl
