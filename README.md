@@ -140,7 +140,7 @@ Lale>      # shows that Lale is the active project
 ```
 
 
-[contrib-url]: https://github.com/IBM/Lale.jl/blob/master/CONTRIBUTORS.md
+[contrib-url]: https://github.com/IBM/Lale.jl/blob/main/CONTRIBUTORS.md
 [issues-url]: https://github.com/IBM/Lale.jl/issues
 
 [discourse-tag-url]: https://discourse.julialang.org/
@@ -156,7 +156,7 @@ Lale>      # shows that Lale is the active project
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [docs-dev-url]: https://ibm.github.io/Lale.jl/dev/
 
-[travis-img]: https://travis-ci.com/IBM/Lale.jl.svg?branch=master
+[travis-img]: https://travis-ci.com/IBM/Lale.jl.svg?branch=main
 [travis-url]: https://travis-ci.com/IBM/Lale.jl
 
 [codecov-img]: https://codecov.io/gh/IBM/Lale.jl/branch/master/graph/badge.svg
