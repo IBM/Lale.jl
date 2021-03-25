@@ -7,5 +7,10 @@ Follow the guidelines in [MAINTAINERS](MAINTAINERS.md) when you submit a PR.
 We use GitHub issue tracker for any issue/bug reporting and discussion.
 
 ## Contributors
+Paulito Palmes
+Martin Hirzel 
+Kiran Kate
+Avraham E Shinnar
 
 ## Collaborators
+Elizabeth Daly
