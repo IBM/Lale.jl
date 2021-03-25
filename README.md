@@ -14,12 +14,12 @@ Instructions for Lale developers can be found [here](./docs/DevInstruction.md).
 - __correctness checks__: uses JSON Schema to catch mistakes when there is a mismatch between hyperparameters and their type, or between data and operators
 - __interoperability__: supports growing library of transformers and estimators
 
-Here is an example of a typical lale pipeline using the following processing elements: principal 
-component analysis (pca), noop (no operation), random forest regression (rf), 
-and decision tree regression (tree):
+Here is an example of a typical `Lale` pipeline using the following processing elements: Principal 
+Component Analysis (PCA), NoOp (no operation), Random Forest Regression (RFR), 
+and Decision Tree Regression (DTree):
 
 ```julia
-lalepipe = (pca + noop) >> (rf | tree)
+lalepipe = (PCA + NoOp) >> (RF | DTree)
 laleopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
 fit!(laleopt, Xtrain,Ytrain)
 pred = transform!(laleopt,Xtest)
