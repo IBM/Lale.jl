@@ -10,7 +10,10 @@ using ..Utils
 using ..LaleAbsTypes
 
 import ..AbsTypes: fit!, transform!
+import ..LaleAbsTypes: fit, transform
+
 export fit!, transform!
+export fit, transform
 
 import Base: >>,|,+,|>,&
 export  >>,|,+,|>,&
@@ -119,5 +122,20 @@ function transform!(lopt::LaleOptimizer, xx::DataFrame)
    trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
 end
 
+function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector)
+   Xpd = Pandas.DataFrame(xx).pyo
+   Ypd = Pandas.DataFrame(y).pyo
+   margs = lopt.model[:impl_args]
+   optim = lopt.model[:optimizer]
+   pipe = lopt.model[:lalepipe]
+   trained = pipe.auto_configure(Xpd, Ypd, optimizer=optim_dict[optim]; margs...)
+   lopt.model[:trained] = trained
+end
+
+function transform(lopt::LaleOptimizer, xx::DataFrame)
+   Xpd = Pandas.DataFrame(xx).pyo
+   trainedmodel = lopt.model[:trained]
+   trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
+end
 
 end

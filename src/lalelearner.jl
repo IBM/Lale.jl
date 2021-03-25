@@ -10,7 +10,9 @@ using ..LaleAbsTypes
 using ..Utils
 
 import ..AbsTypes: fit!, transform!
-export fit!, transform!
+import ..LaleAbsTypes: fit, transform
+
+export fit!, transform!, fit, transform
 export LaleLearner, lalelearners
 
 const learner_dict = Dict{String,PyObject}() 
@@ -77,7 +79,7 @@ mutable struct LaleLearner <: LaleOperator
          println("$lr is not supported.") 
          println()
          lalelearners()
-         error("Argument keyword error")
+         throw(ArgumentError("Argument keyword error"))
       end
       impl_args = cargs[:impl_args]
       learner = cargs[:learner]
@@ -139,6 +141,36 @@ function transform!(lale::LaleLearner, xx::DataFrame)
    lalelearner = lale.model[:laleobj]
    return collect(lalelearner.predict(x))
 end
+
+
+function fit(lale::LaleLearner, xx::DataFrame, y::Vector)
+  x = xx |> Array
+  impl_args = copy(lale.model[:impl_args])
+  learner = lale.model[:learner]
+  py_learner = learner_dict[learner]
+
+  # Assign CombineML-specific defaults if required
+  if learner == "RadiusNeighborsClassifier"
+    if get(impl_args, :outlier_label, nothing) == nothing
+      impl_options[:outlier_label] = labels[rand(1:size(labels, 1))]
+    end
+  end
+
+  # Train
+  modelobj = py_learner(;impl_args...)
+  modelobj.fit(x,y)
+  lale.model[:laleobj]   = modelobj
+  lale.model[:impl_args] = impl_args
+end
+
+
+function transform(lale::LaleLearner, xx::DataFrame)
+   x = deepcopy(xx)|> Array
+   #return collect(learner.model[:predict](x))
+   lalelearner = lale.model[:laleobj]
+   return collect(lalelearner.predict(x))
+end
+
 
 end
 

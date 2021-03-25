@@ -10,7 +10,9 @@ using ..LaleAbsTypes
 using ..Utils
 
 import ..AbsTypes: fit!, transform!
-export fit!, transform!
+import ..LaleAbsTypes: fit, transform
+
+export fit!, transform!, fit, transform
 export LalePreprocessor, lalepreprocessors
 
 const preprocessor_dict = Dict{String,PyObject}()
@@ -101,7 +103,7 @@ mutable struct LalePreprocessor <: LaleOperator
          println("$prep is not supported.") 
          println()
          skpreprocessors()
-         error("Argument keyword error")
+         throw(ArgumentError("Argument keyword error"))
       end
       impl_args = cargs[:impl_args]
       preprocessor = cargs[:preprocessor]
@@ -158,6 +160,35 @@ function transform!(skp::LalePreprocessor, x::DataFrame)
    model=skp.model[:laleobj]
    return collect(model.transform(features)) |> x->DataFrame(x,:auto)
 end
+
+function fit(skp::LalePreprocessor, x::DataFrame, y::Vector=[])
+   features = x |> Array
+   impl_args = copy(skp.model[:impl_args])
+   autocomp = skp.model[:autocomponent]
+   if autocomp == true
+      cols = ncol(x)
+      ncomponents = 1
+      if cols > 0
+         ncomponents = round(sqrt(cols),digits=0) |> Integer
+         push!(impl_args,:n_components => ncomponents)
+      end
+   end
+   preprocessor = skp.model[:preprocessor]
+   py_preprocessor = preprocessor_dict[preprocessor]
+
+   # Train model
+   preproc = py_preprocessor(;impl_args...)
+   preproc.fit(features)
+   skp.model[:laleobj] = preproc
+   skp.model[:impl_args] = impl_args
+end
+
+function transform(skp::LalePreprocessor, x::DataFrame)
+   features = deepcopy(x) |> Array
+   model=skp.model[:laleobj]
+   return collect(model.transform(features)) |> x->DataFrame(x,:auto)
+end
+
 
 end
 

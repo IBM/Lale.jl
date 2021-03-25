@@ -24,6 +24,9 @@ function pipeline_test()
    treereg = LaleLearner("DecisionTreeRegressor")
    noop    = LalePreprocessor("NoOp")
 
+   @test_throws ArgumentError LalePreprocessor("PCAN")
+   @test_throws ArgumentError LaleLearner("RandomForestClassifers")
+
    # amlp ops
    ohe  = OneHotEncoder()
    catf = CatFeatureSelector()
