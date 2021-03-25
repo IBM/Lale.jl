@@ -25,12 +25,14 @@ fit!(laleopt, Xtrain,Ytrain)
 pred = transform!(laleopt,Xtest)
 ```
 The block of code above will jointly search the optimal hyperparameters 
-of both random forest and decision tree and select the best learner while at 
-the same time search the optimal structure of the preprocessing elements, i.e., 
-whether to use pca or not. The `>>` operator is used to
-compose pipeline while the `+` operator is used to concatenate subpipelines.
-Finally, the choice operator `|` signifies to the LaleOptimizer 
-to search and select which among its pipeline elements will be optimal.
+of both Random Forest and Decision Tree learners and select the best 
+learner while at the same time search the optimal structure of 
+the preprocessing elements, i.e., whether to use pca or not. 
+
+The `>>` operator is used to compose pipelines while the `+` operator 
+is used to concatenate subpipelines. Finally, the choice operator `|` 
+signifies to the `LaleOptimizer` to search and select which among 
+its pipeline elements will be optimal.
 
 ### Installation
 Lale is in the Julia General package registry. The latest
