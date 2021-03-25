@@ -131,14 +131,14 @@ Note: Instead of `]`, you can also do `Pkg.action("arg")`
   julia --project demo/demo-lale.jl
   ```
 
-9. To run Julia and activate treat the current location as project, run
-Julia with the following argument:
+9. Run Julia with the following argument to treat the current directory as a project:
 ```shell
+> pwd
+> path/to/Lale
 > julia --project
 julia> ]
-Lale>      # shows that Lale is the active project
+Lale>      # indicates that Lale is the active project
 ```
-
 
 [contrib-url]: https://github.com/IBM/Lale.jl/blob/main/CONTRIBUTORS.md
 [issues-url]: https://github.com/IBM/Lale.jl/issues

@@ -1,94 +1,246 @@
 Collecting lale
   Using cached lale-0.4.14-py3-none-any.whl (771 kB)
-Collecting scipy
-  Downloading scipy-1.6.1-cp37-cp37m-macosx_10_9_x86_64.whl (30.7 MB)
-Collecting graphviz
-  Using cached graphviz-0.16-py2.py3-none-any.whl (19 kB)
 Collecting decorator
   Using cached decorator-4.4.2-py2.py3-none-any.whl (9.2 kB)
-Collecting black==19.10b0
-  Using cached black-19.10b0-py36-none-any.whl (97 kB)
-Collecting numpy
-  Using cached numpy-1.20.1-cp37-cp37m-macosx_10_9_x86_64.whl (16.0 MB)
-Collecting scikit-learn>=0.20.3
-  Downloading scikit_learn-0.24.1-cp37-cp37m-macosx_10_13_x86_64.whl (7.2 MB)
-Collecting jsonschema
-  Using cached jsonschema-3.2.0-py2.py3-none-any.whl (56 kB)
+Collecting pandas
+  Using cached pandas-1.2.3-cp37-cp37m-macosx_10_9_x86_64.whl (10.4 MB)
 Collecting hyperopt
   Using cached hyperopt-0.2.5-py2.py3-none-any.whl (965 kB)
-Collecting pandas
-  Downloading pandas-1.2.3-cp37-cp37m-macosx_10_9_x86_64.whl (10.4 MB)
+Collecting graphviz
+  Using cached graphviz-0.16-py2.py3-none-any.whl (19 kB)
+Collecting h5py
+  Using cached h5py-3.2.1-cp37-cp37m-macosx_10_9_x86_64.whl (2.9 MB)
 Collecting astunparse
   Using cached astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+Collecting scikit-learn>=0.20.3
+  Using cached scikit_learn-0.24.1-cp37-cp37m-macosx_10_13_x86_64.whl (7.2 MB)
+Collecting scipy
+  Downloading scipy-1.6.2-cp37-cp37m-macosx_10_9_x86_64.whl (30.7 MB)
+Collecting jsonschema
+  Using cached jsonschema-3.2.0-py2.py3-none-any.whl (56 kB)
+Collecting black==19.10b0
+  Using cached black-19.10b0-py36-none-any.whl (97 kB)
 Collecting jsonsubschema
   Using cached jsonsubschema-0.0.1-py3-none-any.whl (24 kB)
-Collecting h5py
-  Downloading h5py-3.2.1-cp37-cp37m-macosx_10_9_x86_64.whl (2.9 MB)
-Collecting attrs>=18.1.0
-  Using cached attrs-20.3.0-py2.py3-none-any.whl (49 kB)
-Collecting toml>=0.9.4
-  Using cached toml-0.10.2-py2.py3-none-any.whl (16 kB)
-Collecting pathspec<1,>=0.6
-  Using cached pathspec-0.8.1-py2.py3-none-any.whl (28 kB)
-Collecting regex
-  Downloading regex-2021.3.17-cp37-cp37m-macosx_10_9_x86_64.whl (285 kB)
-Collecting typed-ast>=1.4.0
-  Using cached typed_ast-1.4.2-cp37-cp37m-macosx_10_9_x86_64.whl (223 kB)
-Collecting click>=6.5
-  Using cached click-7.1.2-py2.py3-none-any.whl (82 kB)
-Collecting appdirs
-  Using cached appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
-Collecting joblib>=0.11
-  Using cached joblib-1.0.1-py3-none-any.whl (303 kB)
-Collecting threadpoolctl>=2.0.0
-  Using cached threadpoolctl-2.1.0-py3-none-any.whl (12 kB)
-Processing /Users/ppalmes/Library/Caches/pip/wheels/a5/52/bf/71258a1d7b3c8cbe1ee53f9314c6f65f20385481eaee573cc5/pyrsistent-0.17.3-cp37-cp37m-macosx_10_9_x86_64.whl
-Collecting setuptools
-  Downloading setuptools-54.2.0-py3-none-any.whl (785 kB)
-Collecting importlib-metadata; python_version < "3.8"
-  Downloading importlib_metadata-3.7.3-py3-none-any.whl (12 kB)
-Collecting six>=1.11.0
-  Using cached six-1.15.0-py2.py3-none-any.whl (10 kB)
-Processing /Users/ppalmes/Library/Caches/pip/wheels/8b/99/a0/81daf51dcd359a9377b110a8a886b3895921802d2fc1b2397e/future-0.18.2-cp37-none-any.whl
-Collecting cloudpickle
-  Using cached cloudpickle-1.6.0-py3-none-any.whl (23 kB)
-Collecting networkx>=2.2
-  Using cached networkx-2.5-py3-none-any.whl (1.6 MB)
-Collecting tqdm
-  Using cached tqdm-4.59.0-py2.py3-none-any.whl (74 kB)
-Collecting pytz>=2017.3
-  Using cached pytz-2021.1-py2.py3-none-any.whl (510 kB)
+Collecting numpy
+  Using cached numpy-1.20.1-cp37-cp37m-macosx_10_9_x86_64.whl (16.0 MB)
 Collecting python-dateutil>=2.7.3
   Using cached python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Collecting pytz>=2017.3
+  Using cached pytz-2021.1-py2.py3-none-any.whl (510 kB)
+Processing /Users/ppalmes/Library/Caches/pip/wheels/8b/99/a0/81daf51dcd359a9377b110a8a886b3895921802d2fc1b2397e/future-0.18.2-cp37-none-any.whl
+Collecting networkx>=2.2
+  Using cached networkx-2.5-py3-none-any.whl (1.6 MB)
+Collecting cloudpickle
+  Using cached cloudpickle-1.6.0-py3-none-any.whl (23 kB)
+Collecting six
+  Using cached six-1.15.0-py2.py3-none-any.whl (10 kB)
+Collecting tqdm
+  Using cached tqdm-4.59.0-py2.py3-none-any.whl (74 kB)
+Collecting cached-property; python_version < "3.8"
+  Using cached cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
 Collecting wheel<1.0,>=0.23.0
   Using cached wheel-0.36.2-py2.py3-none-any.whl (35 kB)
+Collecting threadpoolctl>=2.0.0
+  Using cached threadpoolctl-2.1.0-py3-none-any.whl (12 kB)
+Collecting joblib>=0.11
+  Using cached joblib-1.0.1-py3-none-any.whl (303 kB)
+Collecting setuptools
+  Using cached setuptools-54.2.0-py3-none-any.whl (785 kB)
+Collecting attrs>=17.4.0
+  Using cached attrs-20.3.0-py2.py3-none-any.whl (49 kB)
+Processing /Users/ppalmes/Library/Caches/pip/wheels/a5/52/bf/71258a1d7b3c8cbe1ee53f9314c6f65f20385481eaee573cc5/pyrsistent-0.17.3-cp37-cp37m-macosx_10_9_x86_64.whl
+Collecting importlib-metadata; python_version < "3.8"
+  Using cached importlib_metadata-3.7.3-py3-none-any.whl (12 kB)
+Collecting typed-ast>=1.4.0
+  Using cached typed_ast-1.4.2-cp37-cp37m-macosx_10_9_x86_64.whl (223 kB)
+Collecting regex
+  Using cached regex-2021.3.17-cp37-cp37m-macosx_10_9_x86_64.whl (285 kB)
+Collecting click>=6.5
+  Using cached click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting pathspec<1,>=0.6
+  Using cached pathspec-0.8.1-py2.py3-none-any.whl (28 kB)
+Collecting appdirs
+  Using cached appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+Collecting toml>=0.9.4
+  Using cached toml-0.10.2-py2.py3-none-any.whl (16 kB)
 Collecting greenery
   Using cached greenery-3.3.1-py3-none-any.whl (40 kB)
 Collecting python-intervals
   Using cached python_intervals-1.10.0.post1-py2.py3-none-any.whl (13 kB)
-Collecting cached-property; python_version < "3.8"
-  Using cached cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
 Collecting zipp>=0.5
-  Downloading zipp-3.4.1-py3-none-any.whl (5.2 kB)
+  Using cached zipp-3.4.1-py3-none-any.whl (5.2 kB)
 Collecting typing-extensions>=3.6.4; python_version < "3.8"
   Using cached typing_extensions-3.7.4.3-py3-none-any.whl (22 kB)
-Installing collected packages: numpy, scipy, graphviz, decorator, attrs, toml, pathspec, regex, typed-ast, click, appdirs, black, joblib, threadpoolctl, scikit-learn, pyrsistent, setuptools, zipp, typing-extensions, importlib-metadata, six, jsonschema, future, cloudpickle, networkx, tqdm, hyperopt, pytz, python-dateutil, pandas, wheel, astunparse, greenery, python-intervals, jsonsubschema, cached-property, h5py, lale
+Installing collected packages: decorator, six, python-dateutil, pytz, numpy, pandas, scipy, future, networkx, cloudpickle, tqdm, hyperopt, graphviz, cached-property, h5py, wheel, astunparse, threadpoolctl, joblib, scikit-learn, setuptools, attrs, pyrsistent, zipp, typing-extensions, importlib-metadata, jsonschema, typed-ast, regex, click, pathspec, appdirs, toml, black, greenery, python-intervals, jsonsubschema, lale
+  Attempting uninstall: decorator
+    Found existing installation: decorator 4.4.2
+    Uninstalling decorator-4.4.2:
+      Successfully uninstalled decorator-4.4.2
+  Attempting uninstall: six
+    Found existing installation: six 1.15.0
+    Uninstalling six-1.15.0:
+      Successfully uninstalled six-1.15.0
+  Attempting uninstall: python-dateutil
+    Found existing installation: python-dateutil 2.8.1
+    Uninstalling python-dateutil-2.8.1:
+      Successfully uninstalled python-dateutil-2.8.1
+  Attempting uninstall: pytz
+    Found existing installation: pytz 2021.1
+    Uninstalling pytz-2021.1:
+      Successfully uninstalled pytz-2021.1
+  Attempting uninstall: numpy
+    Found existing installation: numpy 1.20.1
+    Uninstalling numpy-1.20.1:
+      Successfully uninstalled numpy-1.20.1
   WARNING: The scripts f2py, f2py3 and f2py3.7 are installed in '/Users/ppalmes/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
-  WARNING: The scripts black and blackd are installed in '/Users/ppalmes/.local/bin' which is not on PATH.
-  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
-  WARNING: The script jsonschema is installed in '/Users/ppalmes/.local/bin' which is not on PATH.
-  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: pandas
+    Found existing installation: pandas 1.2.3
+    Uninstalling pandas-1.2.3:
+      Successfully uninstalled pandas-1.2.3
+  Attempting uninstall: scipy
+    Found existing installation: scipy 1.6.1
+    Uninstalling scipy-1.6.1:
+      Successfully uninstalled scipy-1.6.1
+  Attempting uninstall: future
+    Found existing installation: future 0.18.2
+    Uninstalling future-0.18.2:
+      Successfully uninstalled future-0.18.2
   WARNING: The scripts futurize and pasteurize are installed in '/Users/ppalmes/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: networkx
+    Found existing installation: networkx 2.5
+    Uninstalling networkx-2.5:
+      Successfully uninstalled networkx-2.5
+  Attempting uninstall: cloudpickle
+    Found existing installation: cloudpickle 1.6.0
+    Uninstalling cloudpickle-1.6.0:
+      Successfully uninstalled cloudpickle-1.6.0
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.59.0
+    Uninstalling tqdm-4.59.0:
+      Successfully uninstalled tqdm-4.59.0
   WARNING: The script tqdm is installed in '/Users/ppalmes/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: hyperopt
+    Found existing installation: hyperopt 0.2.5
+    Uninstalling hyperopt-0.2.5:
+      Successfully uninstalled hyperopt-0.2.5
   WARNING: The script hyperopt-mongo-worker is installed in '/Users/ppalmes/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: graphviz
+    Found existing installation: graphviz 0.16
+    Uninstalling graphviz-0.16:
+      Successfully uninstalled graphviz-0.16
+  Attempting uninstall: cached-property
+    Found existing installation: cached-property 1.5.2
+    Uninstalling cached-property-1.5.2:
+      Successfully uninstalled cached-property-1.5.2
+  Attempting uninstall: h5py
+    Found existing installation: h5py 3.2.1
+    Uninstalling h5py-3.2.1:
+      Successfully uninstalled h5py-3.2.1
+  Attempting uninstall: wheel
+    Found existing installation: wheel 0.36.2
+    Uninstalling wheel-0.36.2:
+      Successfully uninstalled wheel-0.36.2
   WARNING: The script wheel is installed in '/Users/ppalmes/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: astunparse
+    Found existing installation: astunparse 1.6.3
+    Uninstalling astunparse-1.6.3:
+      Successfully uninstalled astunparse-1.6.3
+  Attempting uninstall: threadpoolctl
+    Found existing installation: threadpoolctl 2.1.0
+    Uninstalling threadpoolctl-2.1.0:
+      Successfully uninstalled threadpoolctl-2.1.0
+  Attempting uninstall: joblib
+    Found existing installation: joblib 1.0.1
+    Uninstalling joblib-1.0.1:
+      Successfully uninstalled joblib-1.0.1
+  Attempting uninstall: scikit-learn
+    Found existing installation: scikit-learn 0.24.1
+    Uninstalling scikit-learn-0.24.1:
+      Successfully uninstalled scikit-learn-0.24.1
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 54.2.0
+    Uninstalling setuptools-54.2.0:
+      Successfully uninstalled setuptools-54.2.0
+  Attempting uninstall: attrs
+    Found existing installation: attrs 20.3.0
+    Uninstalling attrs-20.3.0:
+      Successfully uninstalled attrs-20.3.0
+  Attempting uninstall: pyrsistent
+    Found existing installation: pyrsistent 0.17.3
+    Uninstalling pyrsistent-0.17.3:
+      Successfully uninstalled pyrsistent-0.17.3
+  Attempting uninstall: zipp
+    Found existing installation: zipp 3.4.1
+    Uninstalling zipp-3.4.1:
+      Successfully uninstalled zipp-3.4.1
+  Attempting uninstall: typing-extensions
+    Found existing installation: typing-extensions 3.7.4.3
+    Uninstalling typing-extensions-3.7.4.3:
+      Successfully uninstalled typing-extensions-3.7.4.3
+  Attempting uninstall: importlib-metadata
+    Found existing installation: importlib-metadata 3.7.3
+    Uninstalling importlib-metadata-3.7.3:
+      Successfully uninstalled importlib-metadata-3.7.3
+  Attempting uninstall: jsonschema
+    Found existing installation: jsonschema 3.2.0
+    Uninstalling jsonschema-3.2.0:
+      Successfully uninstalled jsonschema-3.2.0
+  WARNING: The script jsonschema is installed in '/Users/ppalmes/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: typed-ast
+    Found existing installation: typed-ast 1.4.2
+    Uninstalling typed-ast-1.4.2:
+      Successfully uninstalled typed-ast-1.4.2
+  Attempting uninstall: regex
+    Found existing installation: regex 2021.3.17
+    Uninstalling regex-2021.3.17:
+      Successfully uninstalled regex-2021.3.17
+  Attempting uninstall: click
+    Found existing installation: click 7.1.2
+    Uninstalling click-7.1.2:
+      Successfully uninstalled click-7.1.2
+  Attempting uninstall: pathspec
+    Found existing installation: pathspec 0.8.1
+    Uninstalling pathspec-0.8.1:
+      Successfully uninstalled pathspec-0.8.1
+  Attempting uninstall: appdirs
+    Found existing installation: appdirs 1.4.4
+    Uninstalling appdirs-1.4.4:
+      Successfully uninstalled appdirs-1.4.4
+  Attempting uninstall: toml
+    Found existing installation: toml 0.10.2
+    Uninstalling toml-0.10.2:
+      Successfully uninstalled toml-0.10.2
+  Attempting uninstall: black
+    Found existing installation: black 19.10b0
+    Uninstalling black-19.10b0:
+      Successfully uninstalled black-19.10b0
+  WARNING: The scripts black and blackd are installed in '/Users/ppalmes/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: greenery
+    Found existing installation: greenery 3.3.1
+    Uninstalling greenery-3.3.1:
+      Successfully uninstalled greenery-3.3.1
+  Attempting uninstall: python-intervals
+    Found existing installation: python-intervals 1.10.0.post1
+    Uninstalling python-intervals-1.10.0.post1:
+      Successfully uninstalled python-intervals-1.10.0.post1
+  Attempting uninstall: jsonsubschema
+    Found existing installation: jsonsubschema 0.0.1
+    Uninstalling jsonsubschema-0.0.1:
+      Successfully uninstalled jsonsubschema-0.0.1
   WARNING: The script jsonsubschema is installed in '/Users/ppalmes/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: lale
+    Found existing installation: lale 0.4.14
+    Uninstalling lale-0.4.14:
+      Successfully uninstalled lale-0.4.14
 ERROR: After October 2020 you may experience errors when installing or updating packages. This is because pip will change the way that it resolves dependency conflicts.
 
 We recommend you use --use-feature=2020-resolver to test your packages with the new resolver before it becomes the default.
@@ -96,4 +248,4 @@ We recommend you use --use-feature=2020-resolver to test your packages with the 
 torch 1.7.0 requires dataclasses, which is not installed.
 tensorflow 1.14.0 requires google-pasta>=0.1.6, which is not installed.
 optuna 2.5.0 requires Cython, which is not installed.
-Successfully installed appdirs-1.4.4 astunparse-1.6.3 attrs-20.3.0 black-19.10b0 cached-property-1.5.2 click-7.1.2 cloudpickle-1.6.0 decorator-4.4.2 future-0.18.2 graphviz-0.16 greenery-3.3.1 h5py-3.2.1 hyperopt-0.2.5 importlib-metadata-3.7.3 joblib-1.0.1 jsonschema-3.2.0 jsonsubschema-0.0.1 lale-0.4.14 networkx-2.5 numpy-1.20.1 pandas-1.2.3 pathspec-0.8.1 pyrsistent-0.17.3 python-dateutil-2.8.1 python-intervals-1.10.0.post1 pytz-2021.1 regex-2021.3.17 scikit-learn-0.24.1 scipy-1.6.1 setuptools-54.2.0 six-1.15.0 threadpoolctl-2.1.0 toml-0.10.2 tqdm-4.59.0 typed-ast-1.4.2 typing-extensions-3.7.4.3 wheel-0.36.2 zipp-3.4.1
+Successfully installed appdirs-1.4.4 astunparse-1.6.3 attrs-20.3.0 black-19.10b0 cached-property-1.5.2 click-7.1.2 cloudpickle-1.6.0 decorator-4.4.2 future-0.18.2 graphviz-0.16 greenery-3.3.1 h5py-3.2.1 hyperopt-0.2.5 importlib-metadata-3.7.3 joblib-1.0.1 jsonschema-3.2.0 jsonsubschema-0.0.1 lale-0.4.14 networkx-2.5 numpy-1.20.1 pandas-1.2.3 pathspec-0.8.1 pyrsistent-0.17.3 python-dateutil-2.8.1 python-intervals-1.10.0.post1 pytz-2021.1 regex-2021.3.17 scikit-learn-0.24.1 scipy-1.6.2 setuptools-54.2.0 six-1.15.0 threadpoolctl-2.1.0 toml-0.10.2 tqdm-4.59.0 typed-ast-1.4.2 typing-extensions-3.7.4.3 wheel-0.36.2 zipp-3.4.1

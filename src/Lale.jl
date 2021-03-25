@@ -2,7 +2,6 @@ module Lale
 
 using PyCall
 using Pandas
-using Conda
 
 # load abstract super-types and utils
 using AMLPipelineBase
