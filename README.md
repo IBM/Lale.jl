@@ -27,7 +27,7 @@ pred = transform!(laleopt,Xtest)
 The block of code above will jointly search the optimal hyperparameters 
 of both Random Forest and Decision Tree learners and select the best 
 learner while at the same time search the optimal structure of 
-the preprocessing elements, i.e., whether to use pca or not. 
+the preprocessing elements, i.e., whether to use PCA or not. 
 
 The `>>` operator is used to compose pipelines while the `+` operator 
 is used to concatenate subpipelines. Finally, the choice operator `|` 
