@@ -13,4 +13,4 @@ We use GitHub issue tracker for any issue/bug reporting and discussion.
 - Avraham E Shinnar, IBM Research
 
 ## Collaborators
-Elizabeth Daly, IBM Research
+- Elizabeth Daly, IBM Research
