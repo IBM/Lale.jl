@@ -7,7 +7,7 @@
 ---------
 Lale.jl is a julia port of python's lale library for semi-automated data science. Lale makes it easy to automatically select algorithms and tune hyperparameters of pipelines that are compatible with scikit-learn, in a type-safe fashion.
 
-Instructions for Lale developers can be found [here](./docs/DevInstruction.md)
+Instructions for Lale developers can be found [here](./docs/DevInstruction.md).
 
 ### Package Features
 - __automation__: provides a consistent high-level interface to existing pipeline search tools including Hyperopt, GridSearchCV, and SMAC
