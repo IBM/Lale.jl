@@ -19,7 +19,7 @@ Component Analysis (PCA), NoOp (no operation), Random Forest Regression (RFR),
 and Decision Tree Regression (DTree):
 
 ```julia
-lalepipe = (PCA + NoOp) >> (RF | DTree)
+lalepipe = (PCA + NoOp) >> (RFR | DTree)
 laleopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
 fit!(laleopt, Xtrain,Ytrain)
 pred = transform!(laleopt,Xtest)
