@@ -36,7 +36,7 @@ function __init__()
    global _make_union         = LALEOPS.make_union
 end
 
-⊖(a::PyObject,b::PyObject)         = _make_pipeline(a,b)
+⊖(a::PyObject,b::PyObject)          = _make_pipeline(a,b)
 |>(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⊖ b.model[:laleobj]
 |>(a::PyObject,b::LaleOperator)     = a ⊖ b.model[:laleobj]
 |>(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⊖ b
@@ -48,9 +48,11 @@ end
 +(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊕ b.model[:laleobj]
 +(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj]
 +(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b
-(&)(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊕ b.model[:laleobj]
-(&)(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj]
-(&)(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b
+
+⨸(a::PyObject,b::PyObject)           = _make_union_no_concat(a,b)
+(&)(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⨸ b.model[:laleobj]
+(&)(a::PyObject,b::LaleOperator)     = a ⨸ b.model[:laleobj]
+(&)(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⨸ b
 
 ⊗(a::PyObject,b::PyObject)          = _make_choice(a,b)
 |(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊗ b.model[:laleobj]
