@@ -28,13 +28,14 @@ laleops       = pyimport("lale.operators")
 make_pipeline = laleops.make_pipeline
 make_choice   = laleops.make_choice
 make_union    = laleops.make_union
+make_union_nc = laleops.make_union_no_concat
 
 # define lale operators
 import Base: >>, |,&, + 
-#&(a::PyObject,b::PyObject)  = make_union(a,b) 
->>(a::PyObject,b::PyObject) = make_pipeline(a,b)
-+(a::PyObject,b::PyObject)  = make_union(a,b)
-|(a::PyObject,b::PyObject)  = make_choice(a,b) # UTF \times
+(&)(a::PyObject,b::PyObject) = make_union_nc(a,b)
+>>(a::PyObject,b::PyObject)  = make_pipeline(a,b)
++(a::PyObject,b::PyObject)   = make_union(a,b)
+|(a::PyObject,b::PyObject)   = make_choice(a,b) # UTF \times
 
 # load data
 (train_X, train_y), (test_X, test_y) = dt.california_housing_df()

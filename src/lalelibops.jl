@@ -135,7 +135,8 @@ end
 function transform(lopt::LaleOptimizer, xx::DataFrame)
    Xpd = Pandas.DataFrame(xx).pyo
    trainedmodel = lopt.model[:trained]
-   trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
+   #trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
+   trainedmodel.predict(Xpd) |> x -> x[:,1]
 end
 
 end
