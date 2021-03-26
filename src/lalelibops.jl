@@ -34,7 +34,7 @@ function __init__()
    global _make_pipeline      = LALEOPS.make_pipeline
    global _make_choice        = LALEOPS.make_choice
    global _make_union         = LALEOPS.make_union
-   global _make_union_nc      = LALEOPS._make_union_no_concat
+   global _make_union_nc      = LALEOPS.make_union_no_concat
 end
 
 ⊖(a::PyObject,b::PyObject)          = _make_pipeline(a,b)
