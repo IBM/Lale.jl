@@ -34,6 +34,7 @@ function __init__()
    global _make_pipeline      = LALEOPS.make_pipeline
    global _make_choice        = LALEOPS.make_choice
    global _make_union         = LALEOPS.make_union
+   global _make_union_nc      = LALEOPS._make_union_no_concat
 end
 
 ⊖(a::PyObject,b::PyObject)          = _make_pipeline(a,b)
@@ -49,7 +50,7 @@ end
 +(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj]
 +(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b
 
-⨸(a::PyObject,b::PyObject)           = _make_union_no_concat(a,b)
+⨸(a::PyObject,b::PyObject)           = _make_union_nc(a,b)
 (&)(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⨸ b.model[:laleobj]
 (&)(a::PyObject,b::LaleOperator)     = a ⨸ b.model[:laleobj]
 (&)(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⨸ b
