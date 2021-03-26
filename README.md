@@ -74,13 +74,15 @@ treereg = laleoperator("DecisionTreeRegressor")
 # Lale regression
 lalepipe  = (pca + noop) >>  (rfr | treereg )
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
-lalepred  = fit_transform!(lale_hopt,Xreg,Yreg)
+laletrain = fit(lale_hopt,Xreg,Yreg)
+lalepred = transform(laletrain,Xreg)
 lalermse  = score(:rmse,lalepred,Yreg)
 
 # Lale classification
 lalepipe  = (rb + pca) |> rfc
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
-lalepred  = fit_transform!(lale_hopt,Xcl,Ycl)
+laletrain  = fit(lale_hopt,Xcl,Ycl)
+lalepred  = transform(laletrain,hopt,Xcl,Ycl)
 laleacc   = score(:accuracy,lalepred,Ycl)
 ```
 

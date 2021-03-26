@@ -131,6 +131,6 @@ function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector)
    return loptcopy
 end
 
-transform(lopt::LaleOptimizer, xx::DataFrame) = transform(lopt,xx)
+transform(lopt::LaleOptimizer, xx::DataFrame) = transform!(lopt,xx)
 
 end
