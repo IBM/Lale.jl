@@ -82,7 +82,7 @@ lalermse  = score(:rmse,lalepred,Yreg)
 lalepipe  = (rb + pca) |> rfc
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
 laletrain  = fit(lale_hopt,Xcl,Ycl)
-lalepred  = transform(laletrain,hopt,Xcl,Ycl)
+lalepred  = transform(laletrain,Xcl)
 laleacc   = score(:accuracy,lalepred,Ycl)
 ```
 
