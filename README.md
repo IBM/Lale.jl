@@ -64,12 +64,12 @@ Xcl  = iris[:,1:4] |> DataFrame
 Ycl  = iris[:,5]   |> Vector
 
 # lale ops
-pca     = LalePreprocessor("PCA")
-rb      = LalePreprocessor("RobustScaler")
-noop    = LalePreprocessor("NoOp")
-rfr     = LaleLearner("RandomForestRegressor")
-rfc     = LaleLearner("RandomForestClassifier")
-treereg = LaleLearner("DecisionTreeRegressor")
+pca     = laleoperator("PCA")
+rb      = laleoperator("RobustScaler")
+noop    = laleoperator("NoOp")
+rfr     = laleoperator("RandomForestRegressor")
+rfc     = laleoperator("RandomForestClassifier")
+treereg = laleoperator("DecisionTreeRegressor")
 
 # Lale regression
 lalepipe  = (pca + noop) >>  (rfr | treereg )

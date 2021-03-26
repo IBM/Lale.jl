@@ -125,7 +125,12 @@ function transform!(lopt::LaleOptimizer, xx::DataFrame)
    trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
 end
 
-fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector) = fit!(lopt,xx,y)
+function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector) 
+   loptcopy = deepcopy(lopt)
+   fit!(loptcopy,xx,y)
+   return loptcopy
+end
+
 transform(lopt::LaleOptimizer, xx::DataFrame) = transform(lopt,xx)
 
 end

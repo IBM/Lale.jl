@@ -142,10 +142,13 @@ function transform!(lale::LaleLearner, xx::DataFrame)
    return collect(lalelearner.predict(x))
 end
 
-fit(lale::LaleLearner, xx::DataFrame, y::Vector) = fit!(lale,xx,y)
+function fit(lale::LaleLearner, xx::DataFrame, y::Vector) 
+   lcopy = deepcopy(lale)
+   fit!(lcopy,xx,y)
+   return lcopy
+end
 
 transform(lale::LaleLearner, xx::DataFrame)=transform!(lale,xx)
-
 
 end
 

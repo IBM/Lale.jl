@@ -161,7 +161,11 @@ function transform!(skp::LalePreprocessor, x::DataFrame)
    return collect(model.transform(features)) |> x->DataFrame(x,:auto)
 end
 
-fit(skp::LalePreprocessor, x::DataFrame, y::Vector=[]) = fit!(skp,x,y)
+function fit(skp::LalePreprocessor, x::DataFrame, y::Vector=[]) 
+   skpcopy = deepcopy(skp)
+   fit!(skpcopy,x,y)
+   return skpcopy
+end
 transform(skp::LalePreprocessor, x::DataFrame) = transform!(skp,x,y)
 
 
