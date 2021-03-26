@@ -25,8 +25,8 @@ function __init__()
    copy!(PREP, pyimport("lale.lib.sklearn"))
    copy!(AGEN, pyimport("lale.lib.autogen"))
    copy!(LLIBS, pyimport("lale.lib.lale"))
-   # Available lale scikit-learn learners.
    preprocessor_dict["NoOp"]                        = LLIBS.NoOp 
+   preprocessor_dict["ConcatFeatures"]              = LLIBS.ConcatFeatures 
    preprocessor_dict["FeatureAgglomeration"]        = PREP.FeatureAgglomeration 
    preprocessor_dict["FactorAnalysis"]              = AGEN.FactorAnalysis
    preprocessor_dict["FastICA"]                     = AGEN.FastICA
@@ -161,33 +161,8 @@ function transform!(skp::LalePreprocessor, x::DataFrame)
    return collect(model.transform(features)) |> x->DataFrame(x,:auto)
 end
 
-function fit(skp::LalePreprocessor, x::DataFrame, y::Vector=[])
-   features = x |> Array
-   impl_args = copy(skp.model[:impl_args])
-   autocomp = skp.model[:autocomponent]
-   if autocomp == true
-      cols = ncol(x)
-      ncomponents = 1
-      if cols > 0
-         ncomponents = round(sqrt(cols),digits=0) |> Integer
-         push!(impl_args,:n_components => ncomponents)
-      end
-   end
-   preprocessor = skp.model[:preprocessor]
-   py_preprocessor = preprocessor_dict[preprocessor]
-
-   # Train model
-   preproc = py_preprocessor(;impl_args...)
-   preproc.fit(features)
-   skp.model[:laleobj] = preproc
-   skp.model[:impl_args] = impl_args
-end
-
-function transform(skp::LalePreprocessor, x::DataFrame)
-   features = deepcopy(x) |> Array
-   model=skp.model[:laleobj]
-   return collect(model.transform(features)) |> x->DataFrame(x,:auto)
-end
+fit(skp::LalePreprocessor, x::DataFrame, y::Vector=[]) = fit!(skp,x,y)
+transform(skp::LalePreprocessor, x::DataFrame) = transform!(skp,x,y)
 
 
 end
