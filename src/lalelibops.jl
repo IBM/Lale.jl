@@ -10,7 +10,10 @@ using ..Utils
 using ..LaleAbsTypes
 
 import ..AbsTypes: fit!, transform!
+import ..LaleAbsTypes: fit, transform
+
 export fit!, transform!
+export fit, transform
 
 import Base: >>,|,+,|>,&
 export  >>,|,+,|>,&
@@ -31,9 +34,10 @@ function __init__()
    global _make_pipeline      = LALEOPS.make_pipeline
    global _make_choice        = LALEOPS.make_choice
    global _make_union         = LALEOPS.make_union
+   global _make_union_nc      = LALEOPS.make_union_no_concat
 end
 
-⊖(a::PyObject,b::PyObject)         = _make_pipeline(a,b)
+⊖(a::PyObject,b::PyObject)          = _make_pipeline(a,b)
 |>(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⊖ b.model[:laleobj]
 |>(a::PyObject,b::LaleOperator)     = a ⊖ b.model[:laleobj]
 |>(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⊖ b
@@ -45,9 +49,11 @@ end
 +(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊕ b.model[:laleobj]
 +(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj]
 +(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b
-(&)(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊕ b.model[:laleobj]
-(&)(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj]
-(&)(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b
+
+⨸(a::PyObject,b::PyObject)           = _make_union_nc(a,b)
+(&)(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⨸ b.model[:laleobj]
+(&)(a::PyObject,b::LaleOperator)     = a ⨸ b.model[:laleobj]
+(&)(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⨸ b
 
 ⊗(a::PyObject,b::PyObject)          = _make_choice(a,b)
 |(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊗ b.model[:laleobj]
@@ -119,5 +125,7 @@ function transform!(lopt::LaleOptimizer, xx::DataFrame)
    trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
 end
 
+fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector) = fit!(lopt,xx,y)
+transform(lopt::LaleOptimizer, xx::DataFrame) = transform(lopt,xx)
 
 end

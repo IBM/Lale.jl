@@ -10,7 +10,9 @@ using ..LaleAbsTypes
 using ..Utils
 
 import ..AbsTypes: fit!, transform!
-export fit!, transform!
+import ..LaleAbsTypes: fit, transform
+
+export fit!, transform!, fit, transform
 export LalePreprocessor, lalepreprocessors
 
 const preprocessor_dict = Dict{String,PyObject}()
@@ -23,8 +25,8 @@ function __init__()
    copy!(PREP, pyimport("lale.lib.sklearn"))
    copy!(AGEN, pyimport("lale.lib.autogen"))
    copy!(LLIBS, pyimport("lale.lib.lale"))
-   # Available lale scikit-learn learners.
    preprocessor_dict["NoOp"]                        = LLIBS.NoOp 
+   preprocessor_dict["ConcatFeatures"]              = LLIBS.ConcatFeatures 
    preprocessor_dict["FeatureAgglomeration"]        = PREP.FeatureAgglomeration 
    preprocessor_dict["FactorAnalysis"]              = AGEN.FactorAnalysis
    preprocessor_dict["FastICA"]                     = AGEN.FastICA
@@ -101,7 +103,7 @@ mutable struct LalePreprocessor <: LaleOperator
          println("$prep is not supported.") 
          println()
          skpreprocessors()
-         error("Argument keyword error")
+         throw(ArgumentError("Argument keyword error"))
       end
       impl_args = cargs[:impl_args]
       preprocessor = cargs[:preprocessor]
@@ -158,6 +160,10 @@ function transform!(skp::LalePreprocessor, x::DataFrame)
    model=skp.model[:laleobj]
    return collect(model.transform(features)) |> x->DataFrame(x,:auto)
 end
+
+fit(skp::LalePreprocessor, x::DataFrame, y::Vector=[]) = fit!(skp,x,y)
+transform(skp::LalePreprocessor, x::DataFrame) = transform!(skp,x,y)
+
 
 end
 

@@ -1,7 +1,6 @@
 module Lale
 
 using PyCall
-using Pandas
 
 # load abstract super-types and utils
 using AMLPipelineBase
@@ -35,8 +34,13 @@ import AMLPipelineBase.AbsTypes: fit!, transform!
 # ------
 module LaleAbsTypes
    using ..AbsTypes
-   export LaleOperator
+   using DataFrames
+
+   export LaleOperator, fit, transform
+
    abstract type LaleOperator <: Learner end
+   fit(o::LaleOperator, x::DataFrame, y::Vector) = nothing
+   tranform(o::LaleOperator, x::DataFrame) = nothing
 end
 
 include("lalelearner.jl")
@@ -52,5 +56,23 @@ using .LaleLibOps
 export NoOp
 export LaleOptimizer, laleoptimizers
 export >>, +, |, |>, &
+
+export laleoperator
+export fit, transform
+
+function laleoperator(name::String; args...)::Union{LalePreprocessor,LaleLearner}
+   lrs = keys(LaleLearners.learner_dict)
+   prp = keys(LalePreprocessors.preprocessor_dict)
+   if name ∈ lrs
+      obj=LaleLearner(name; args...)
+   elseif name ∈ prp
+      obj=LalePreprocessor(name; args...)
+   else
+      println("Please choose among these pipeline elements:")
+      println([prp...,lrs...])
+      throw(ArgumentError("$name does not exist"))
+   end
+   return obj
+end
 
 end

@@ -10,7 +10,9 @@ using ..LaleAbsTypes
 using ..Utils
 
 import ..AbsTypes: fit!, transform!
-export fit!, transform!
+import ..LaleAbsTypes: fit, transform
+
+export fit!, transform!, fit, transform
 export LaleLearner, lalelearners
 
 const learner_dict = Dict{String,PyObject}() 
@@ -77,7 +79,7 @@ mutable struct LaleLearner <: LaleOperator
          println("$lr is not supported.") 
          println()
          lalelearners()
-         error("Argument keyword error")
+         throw(ArgumentError("Argument keyword error"))
       end
       impl_args = cargs[:impl_args]
       learner = cargs[:learner]
@@ -139,6 +141,11 @@ function transform!(lale::LaleLearner, xx::DataFrame)
    lalelearner = lale.model[:laleobj]
    return collect(lalelearner.predict(x))
 end
+
+fit(lale::LaleLearner, xx::DataFrame, y::Vector) = fit!(lale,xx,y)
+
+transform(lale::LaleLearner, xx::DataFrame)=transform!(lale,xx)
+
 
 end
 
