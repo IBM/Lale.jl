@@ -19,10 +19,10 @@ Component Analysis (PCA), NoOp (no operation), Random Forest Regression (RFR),
 and Decision Tree Regression (DTree):
 
 ```julia
-lalepipe = (PCA + NoOp) >> (RFR | DTree)
-laleopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
-fit!(laleopt, Xtrain,Ytrain)
-pred = transform!(laleopt,Xtest)
+lalepipe   = (PCA + NoOp) >> (RFR | DTree)
+laleopt    = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
+laletrain  = fit!(laleopt, Xtrain,Ytrain)
+pred       = transform!(laletrained,Xtest)
 ```
 The block of code above will jointly search the optimal hyperparameters 
 of both Random Forest and Decision Tree learners and select the best 
