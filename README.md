@@ -22,7 +22,7 @@ and Decision Tree Regression (DTree):
 lalepipe   = (PCA + NoOp) >> (RFR | DTree)
 laleopt    = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
 laletrain  = fit!(laleopt, Xtrain,Ytrain)
-pred       = transform!(laletrained,Xtest)
+pred       = transform!(laletrain,Xtest)
 ```
 The block of code above will jointly search the optimal hyperparameters 
 of both Random Forest and Decision Tree learners and select the best 
