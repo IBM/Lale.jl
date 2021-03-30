@@ -5,7 +5,7 @@
 | [![][docs-dev-img]][docs-dev-url] [![][docs-stable-img]][docs-stable-url] | [![][travis-img]][travis-url] [![][codecov-img]][codecov-url] | [![][slack-img]][slack-url] [![][gitter-img]][gitter-url] |
 
 ---------
-Lale.jl is a Julia wrapper of python's lale library for semi-automated data science. Lale makes it easy to automatically select algorithms and tune hyperparameters of pipelines that are compatible with scikit-learn, in a type-safe fashion.
+Lale.jl is a Julia wrapper of Python's [Lale](https://github.com/ibm/lale) library for semi-automated data science. Lale makes it easy to automatically select algorithms and tune hyperparameters of pipelines that are compatible with scikit-learn, in a type-safe fashion.
 
 Instructions for Lale developers can be found [here](./docs/DevInstruction.md).
 
@@ -26,13 +26,15 @@ pred      = transform!(laletr,Xtest)
 ```
 The block of code above will jointly search the optimal hyperparameters 
 of both Random Forest and Decision Tree learners and select the best 
-learner while at the same time search the optimal structure of 
-the preprocessing elements, i.e., whether to use PCA or not. 
+learner while at the same time searching the optimal hyperparameters
+of the PCA. 
 
-The `>>` operator is used to compose pipelines while the `+` operator 
-is used to concatenate subpipelines. Finally, the choice operator `|` 
-signifies to the `LaleOptimizer` to search and select which among 
-its pipeline elements will be optimal.
+The *pipe combinator*, `p1 >> p2`, first runs sub-pipeline
+`p1` and then pipes its output into sub-pipeline `p2`.
+The *union combinator*, `p1 + p2`, runs sub-pipelines `p1` and `p2` separately
+over the same data, and then concatenates the output columns of both.
+The *or combinator*, `p1 | p2`, creates an algorithmic choice for the optimizer
+to search and select which among `p1` and `p2` yields better results.
 
 ### Installation
 Lale is in the Julia General package registry. The latest
