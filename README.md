@@ -105,8 +105,8 @@ laleacc   = score(:accuracy,lalepred,Ycl)
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [docs-dev-url]: https://ibm.github.io/Lale.jl/dev/
 
-[travis-img]: https://travis-ci.com/IBM/Lale.jl.svg?branch=main
-[travis-url]: https://travis-ci.com/IBM/Lale.jl
+[travis-img]: https://github.com/IBM/Lale.jl/actions/workflows/ci.yml/badge.svg
+[travis-url]: https://github.com/IBM/Lale.jl/actions/workflows/ci.yml
 
 [codecov-img]: https://codecov.io/gh/IBM/Lale.jl/branch/main/graph/badge.svg?token=YK62W9KQ2T
 [codecov-url]: https://codecov.io/gh/IBM/Lale.jl
