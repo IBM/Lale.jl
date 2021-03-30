@@ -54,7 +54,7 @@ function pipeline_test()
    amlpred = fit_transform!(amlpipe,XC,YC)
    amlpacc = score(:accuracy,amlpred,YC)
    
-   @test abs(amlpacc - laleacc) < 10.0
+   @test abs(amlpacc - laleacc) < 50.0
    
    plr = @pipeline (catf |> ohe) + (numf |> rb |> pca) |> rfr
    plc = @pipeline (catf |> ohe) + (numf |> rb |> pca) |> rfc
