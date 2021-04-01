@@ -43,36 +43,30 @@ module LaleAbsTypes
    tranform(o::LaleOperator, x::DataFrame) = nothing
 end
 
-include("lalelearner.jl")
-using .LaleLearners
-export LaleLearner, lalelearners
+include("laleop.jl")
+using .LaleOps
+export LaleOp, skops, autogenops, lalelibops
 
-include("lalepreprocessor.jl")
-using .LalePreprocessors
-export LalePreprocessor, lalepreprocessor
-
-include("lalelibops.jl")
+include("lalelibop.jl")
 using .LaleLibOps
-export NoOp
 export LaleOptimizer, laleoptimizers
 export >>, +, |, |>, &
 
 export laleoperator
 export fit, transform
 
-function laleoperator(name::String; args...)::Union{LalePreprocessor,LaleLearner}
-   lrs = keys(LaleLearners.learner_dict)
-   prp = keys(LalePreprocessors.preprocessor_dict)
-   if name ∈ lrs
-      obj=LaleLearner(name; args...)
-   elseif name ∈ prp
-      obj=LalePreprocessor(name; args...)
-   else
+function laleoperator(name::String,type::String="sklearn"; args...)
+   try
+      obj = LaleOp(name,type;args...)
+      return obj
+   catch ArgumentError
+      sk = keys(LaleOps.sk_dict)
+      ag = keys(LaleOps.ag_dict)
+      ll = keys(LaleOps.ll_dict)
       println("Please choose among these pipeline elements:")
-      println([prp...,lrs...])
+      println([sk...,ag...,ll...])
       throw(ArgumentError("$name does not exist"))
    end
-   return obj
 end
 
 end
