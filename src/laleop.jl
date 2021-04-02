@@ -106,6 +106,8 @@ mutable struct LaleOp <: LaleOperator
          py_learner = getproperty(sk_dict[learner],learner)
       elseif type == "autogen"
          py_learner = getproperty(ag_dict[learner],learner)
+      elseif type == "lale"
+         py_learner = getproperty(ll_dict[learner],learner)
       else
          throw(ArgumentError("$learner not found"))
       end
@@ -173,25 +175,20 @@ function lalelibops()
   println("Note: Consult Scikitlearn's online help for more details about the learner's arguments.")
 end
 
-function fit!(lale::LaleOp, xx::DataFrame, y::Vector)
+function fit!(lale::LaleOp, xx::DataFrame, y::Vector=Vector())
   x = xx |> Array
   impl_args = copy(lale.model[:impl_args])
   learner = lale.model[:learner]
   type = lale.model[:type]
-  pylearner=PyObject
+  py_learner=PyObject
   if type == "sklearn"
      py_learner = getproperty(sk_dict[learner],learner)
   elseif type == "autogen"
      py_learner = getproperty(ag_dict[learner],learner)
+  elseif type == "lale"
+     py_learner = getproperty(ll_dict[learner],learner)
   else
      throw(ArgumentError("$learner not found"))
-  end
-
-  # Assign CombineML-specific defaults if required
-  if learner == "RadiusNeighborsClassifier"
-    if get(impl_args, :outlier_label, nothing) == nothing
-      impl_options[:outlier_label] = labels[rand(1:size(labels, 1))]
-    end
   end
 
   # Train
@@ -204,18 +201,22 @@ end
 
 function transform!(lale::LaleOp, xx::DataFrame)
    x = deepcopy(xx)|> Array
-   #return collect(learner.model[:predict](x))
    laleobj = lale.model[:laleobj]
-   return collect(laleobj.predict(x))
+   # transform is predict for learners
+   if :transform ∈ propertynames(laleobj)
+      return collect(laleobj.transform(x)) |> x -> DataFrame(x,:auto)
+   else
+      return collect(laleobj.predict(x)) 
+   end
 end
 
-function fit(lale::LaleOp, xx::DataFrame, y::Vector) 
+function fit(lale::Machine, xx::DataFrame, y::Vector=Vector()) 
    lcopy = deepcopy(lale)
    fit!(lcopy,xx,y)
    return lcopy
 end
 
-transform(lale::LaleOp, xx::DataFrame)=transform!(lale,xx)
+transform(lale::Machine, xx::DataFrame)=transform!(lale,xx)
 
 end
 

@@ -1,4 +1,4 @@
-module TestLaleOp
+module TestSkLearn
 
 using Random
 using Test

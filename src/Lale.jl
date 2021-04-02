@@ -53,7 +53,7 @@ export LaleOptimizer, laleoptimizers
 export >>, +, |, |>, &
 
 export laleoperator
-export fit, transform
+export fit, transform, fit!, transform!
 
 function laleoperator(name::String,type::String="sklearn"; args...)
    try
@@ -64,7 +64,13 @@ function laleoperator(name::String,type::String="sklearn"; args...)
       ag = keys(LaleOps.ag_dict)
       ll = keys(LaleOps.ll_dict)
       println("Please choose among these pipeline elements:")
-      println([sk...,ag...,ll...])
+      println()
+      println("sklearn: ", [sk...])
+      println()
+      println("autogen: ", [ag...])
+      println()
+      println("lale: ",    [ll...])
+      println()
       throw(ArgumentError("$name does not exist"))
    end
 end
