@@ -17,7 +17,7 @@ const Y = IRIS[:,4] |> Vector
 function pipeline_test()
 
    # lale ops
-   pca     = LaleOp("PCA")
+   pca     = LaleOp("PCA","sklearn")
    rb      = LaleOp("RobustScaler","autogen")
    rfr     = LaleOp("RandomForestRegressor")
    rfc     = LaleOp("RandomForestClassifier")

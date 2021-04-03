@@ -210,13 +210,13 @@ function transform!(lale::LaleOp, xx::DataFrame)
    end
 end
 
-function fit(lale::Machine, xx::DataFrame, y::Vector=Vector()) 
+function fit(lale::LaleOp, xx::DataFrame, y::Vector=Vector()) 
    lcopy = deepcopy(lale)
    fit!(lcopy,xx,y)
    return lcopy
 end
 
-transform(lale::Machine, xx::DataFrame)=transform!(lale,xx)
+transform(lale::LaleOp, xx::DataFrame)=transform!(lale,xx)
 
 end
 

@@ -39,7 +39,7 @@ module LaleAbsTypes
    export LaleOperator, fit, transform
 
    abstract type LaleOperator <: Learner end
-   fit(o::LaleOperator, x::DataFrame, y::Vector) = nothing
+   fit(o::LaleOperator, x::DataFrame, y::Vector=Vector()) = nothing
    tranform(o::LaleOperator, x::DataFrame) = nothing
 end
 

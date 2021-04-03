@@ -70,9 +70,6 @@ mutable struct LaleOptimizer <: LaleOperator
             :name => "laleoptimizer",
             :optimizer => "Hyperopt",
             :impl_args => Dict{Symbol,Any}(
-                :cv        => 3,
-                :max_evals => 10,
-                :verbose   => true
             )
       )
       cargs = nested_dict_merge(default_args, args)
@@ -109,7 +106,7 @@ function laleoptimizers()
   println("Note: Consult Lale online help for more details about the auto_configure arguments.")
 end
 
-function fit!(lopt::LaleOptimizer, xx::DataFrame, y::Vector)
+function fit!(lopt::LaleOptimizer, xx::DataFrame, y::Vector=Vector())
    Xpd = Pandas.DataFrame(xx).pyo
    Ypd = Pandas.DataFrame(y).pyo
    margs = lopt.model[:impl_args]
@@ -125,7 +122,7 @@ function transform!(lopt::LaleOptimizer, xx::DataFrame)
    trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
 end
 
-function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector) 
+function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector=Vector()) 
    loptcopy = deepcopy(lopt)
    fit!(loptcopy,xx,y)
    return loptcopy
