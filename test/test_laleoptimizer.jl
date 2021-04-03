@@ -17,20 +17,24 @@ const Y = IRIS[:,4] |> Vector
 function pipeline_test()
 
    # lale ops
-   pca     = LalePreprocessor("PCA")
-   rb      = LalePreprocessor("RobustScaler")
-   rfr     = LaleLearner("RandomForestRegressor")
-   rfc     = LaleLearner("RandomForestClassifier")
-   treereg = LaleLearner("DecisionTreeRegressor")
-   noop    = LalePreprocessor("NoOp")
+   pca     = LaleOp("PCA","sklearn")
+   rb      = LaleOp("RobustScaler","autogen")
+   rfr     = LaleOp("RandomForestRegressor")
+   rfc     = LaleOp("RandomForestClassifier")
+   treereg = LaleOp("DecisionTreeRegressor")
+   noop    = LaleOp("NoOp","lale")
 
-   @test_throws ArgumentError LalePreprocessor("PCAN")
-   @test_throws ArgumentError LaleLearner("RandomForestClassifers")
+   @test_throws ArgumentError LaleOp("PCAN")
+   @test_throws ArgumentError LaleOp("RandomForestClassifers")
 
    # amlp ops
    ohe  = OneHotEncoder()
    catf = CatFeatureSelector()
    numf = NumFeatureSelector()
+
+   p=fit(pca,X)
+   res = transform(p,X)
+   @assert size(res,2) == 3
 
    # regression
    lalepipe   = (pca + noop) >>  (rfr | treereg )

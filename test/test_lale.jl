@@ -1,4 +1,4 @@
-module TestLaleLearner
+module TestLaleOp
 
 using Random
 using Test
@@ -14,7 +14,7 @@ const Y = IRIS[:,4] |> Vector
 
 
 const classifiers = [
-    "LinearSVC","QDA","MLPClassifier",
+    "LinearSVC","QuadraticDiscriminantAnalysis","MLPClassifier",
     "RandomForestClassifier",
     "SVC","LinearSVC",
     "MLPClassifier",
@@ -24,18 +24,6 @@ const classifiers = [
     "ExtraTreesClassifier","GradientBoostingClassifier",
     "BaggingClassifier","AdaBoostClassifier","GaussianNB","MultinomialNB",
  ]
-function fit_test(learner::String,in::DataFrame,out::Vector)
-   _learner=LaleLearner(Dict(:learner=>learner))
-   fit!(_learner,in,out)
-   @test _learner.model != Dict()
-   return _learner
-end
-@testset "lale classifiers" begin
-   Random.seed!(123)
-   for cl in classifiers
-      fit_test(cl,XC,YC)
-   end
-end
 
 const regressors = [
     "SVR",
@@ -48,7 +36,21 @@ const regressors = [
     "GradientBoostingRegressor",
     "AdaBoostRegressor"
 ]
-function fit_transform_reg(model::LaleLearner,in::DataFrame,out::Vector)
+function fit_test(learner::String,in::DataFrame,out::Vector)
+   _learner=LaleOp(learner)
+   fit!(_learner,in,out)
+   @test _learner.model != Dict()
+   return _learner
+end
+
+@testset "lale classifiers" begin
+   Random.seed!(123)
+   for cl in classifiers
+      fit_test(cl,XC,YC)
+   end
+end
+
+function fit_transform_reg(model::LaleOp,in::DataFrame,out::Vector)
    @test sum((transform!(model,in) .- out).^2)/length(out) < 2.0
 end
 @testset "lale regressors" begin
