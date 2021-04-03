@@ -95,11 +95,11 @@ function skptest()
 
     mpipeline = @pipeline (stdsc |> pca) |> best
     fit!(mpipeline,features,labels)
-    pred = transform(mpipeline,features)
+    pred = transform!(mpipeline,features)
     @test score(:accuracy,pred,labels) > 50.0
 
     fpipe = @pipeline ((cat + num) + (num + pca))  |> stack
-    fit!(fpipe,features,labels)
+    fit(fpipe,features,labels)
     @test ((transform(fpipe,features) .== labels) |> sum ) / nrow(features) > 0.50
 
 end

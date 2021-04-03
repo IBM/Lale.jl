@@ -18,6 +18,7 @@ function pipeline_test()
 
    # lale ops
    pca     = LaleOp("PCA","sklearn")
+   fit!(pca,X)
    rb      = LaleOp("RobustScaler","autogen")
    rfr     = LaleOp("RandomForestRegressor")
    rfc     = LaleOp("RandomForestClassifier")

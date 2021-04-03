@@ -34,14 +34,16 @@ import AMLPipelineBase.AbsTypes: fit!, transform!
 # ------
 module LaleAbsTypes
    using ..AbsTypes
-   using DataFrames
+   using DataFrames: DataFrame
 
    export LaleOperator, fit, transform
 
    abstract type LaleOperator <: Learner end
-   fit(o::LaleOperator, x::DataFrame, y::Vector=Vector()) = nothing
-   tranform(o::LaleOperator, x::DataFrame) = nothing
+   fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
+   transform(o::Machine, x::DataFrame) = transform!(o,x)
 end
+
+using .LaleAbsTypes
 
 include("laleop.jl")
 using .LaleOps
