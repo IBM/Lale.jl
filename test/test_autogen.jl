@@ -26,7 +26,6 @@ end
 @testset "lale autogen classifiers" begin
    Random.seed!(123)
    for cl in classifiers
-      println(cl)
       fit_test(cl,XC,YC)
    end
 end
@@ -40,7 +39,6 @@ end
 @testset "lale autogen regressors" begin
    Random.seed!(123)
    for rg in regressors
-      println(rg)
       model=fit_test(rg,X,Y)
       fit_transform_reg(model,X,Y)
    end

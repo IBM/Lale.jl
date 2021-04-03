@@ -123,8 +123,8 @@ function transform!(lopt::LaleOptimizer, xx::DataFrame)
 end
 
 function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector=Vector()) 
+   fit!(lopt,xx,y)
    loptcopy = deepcopy(lopt)
-   fit!(loptcopy,xx,y)
    return loptcopy
 end
 

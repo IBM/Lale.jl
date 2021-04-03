@@ -209,14 +209,16 @@ function transform!(lale::LaleOp, xx::DataFrame)
    # transform is predict for learners
    if :transform ∈ propertynames(laleobj)
       return collect(laleobj.transform(x)) |> x -> DataFrame(x,:auto)
+   elseif :predict ∈ propertynames(laleobj)
+      return collect(laleobj.predict(x))
    else
-      return collect(laleobj.predict(x)) 
+      throw(Error("transform error"))
    end
 end
 
 function fit(lale::LaleOp, xx::DataFrame, y::Vector=Vector()) 
-   lcopy = deepcopy(lale)
-   fit!(lcopy,xx,y)
+   fit!(lale,xx,y)
+   lcopy =deepcopy(lale)
    return lcopy
 end
 

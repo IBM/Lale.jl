@@ -44,7 +44,6 @@ end
 @testset "lale preprocessors fit test" begin
    Random.seed!(123)
    for cl in preprocessors
-      #println(cl)
       fit_test(cl,X,Y)
    end
 end
@@ -52,7 +51,6 @@ end
 @testset "lale preprocessors transform test" begin
    Random.seed!(123)
    for cl in preprocessors
-      #println(cl)
       transform_test(cl,X,Y)
    end
 end

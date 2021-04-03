@@ -18,7 +18,6 @@ function pipeline_test()
 
    # lale ops
    pca     = LaleOp("PCA","sklearn")
-   fit!(pca,X)
    rb      = LaleOp("RobustScaler","autogen")
    rfr     = LaleOp("RandomForestRegressor")
    rfc     = LaleOp("RandomForestClassifier")
@@ -32,6 +31,10 @@ function pipeline_test()
    ohe  = OneHotEncoder()
    catf = CatFeatureSelector()
    numf = NumFeatureSelector()
+
+   p=fit(pca,X)
+   res = transform(p,X)
+   @assert size(res,2) == 3
 
    # regression
    lalepipe   = (pca + noop) >>  (rfr | treereg )
