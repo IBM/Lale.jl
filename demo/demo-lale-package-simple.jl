@@ -24,8 +24,8 @@ treereg = laleoperator("DecisionTreeRegressor")
 # Lale regression
 lalepipe =  (pca + noop) >>  (rfr | treereg )
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals=50,cv=3)
-fit(lale_hopt,Xreg,Yreg)
-lalepred = transform(lale_hopt,Xreg)
+laletrained=fit(lale_hopt,Xreg,Yreg)
+lalepred = transform(laletrained,Xreg)
 lalermse=score(:rmse,lalepred,Yreg)
 
 # AutoMLPipeline regression
@@ -38,8 +38,8 @@ amlprmse=score(:rmse,amlpred,Yreg)
 # Lale classification 
 lalepipe =  (rb + pca) |> rfc
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
-fit(lale_hopt,Xcl,Ycl)
-lalepred = transform(lale_hopt,Xcl)
+laletrained=fit(lale_hopt,Xcl,Ycl)
+lalepred = transform(laletrained,Xcl)
 laleacc   = score(:accuracy,lalepred,Ycl)
 
 # AutoMLPipeline classification

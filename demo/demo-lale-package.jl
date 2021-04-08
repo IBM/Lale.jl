@@ -44,7 +44,8 @@ numf = NumFeatureSelector()
 # Lale regression
 lalepipe =  (pca + noop) >>  (rfr | treereg )
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals=10,cv=3)
-lalepred = fit_transform!(lale_hopt,Xreg,Yreg)
+laletrained = fit(lale_hopt,Xreg,Yreg)
+lalepred = transform(laletrained,Xreg)
 lalermse=score(:rmse,lalepred,Yreg)
 
 # AutoMLPipeline regression
@@ -56,7 +57,8 @@ amlprmse=score(:rmse,amlpred,Yreg)
 # Lale classification 
 lalepipe =  (rb + pca) |> rfc
 lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
-lalepred  = fit_transform!(lale_hopt,Xcl,Ycl)
+laletrained  = fit(lale_hopt,Xcl,Ycl)
+lalepred  = transform(laletrained,Xcl)
 laleacc   = score(:accuracy,lalepred,Ycl)
 
 # AutoMLPipeline classification
