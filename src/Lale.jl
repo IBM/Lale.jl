@@ -34,45 +34,47 @@ import AMLPipelineBase.AbsTypes: fit!, transform!
 # ------
 module LaleAbsTypes
    using ..AbsTypes
-   using DataFrames
+   using DataFrames: DataFrame
 
    export LaleOperator, fit, transform
 
    abstract type LaleOperator <: Learner end
-   fit(o::LaleOperator, x::DataFrame, y::Vector) = nothing
-   tranform(o::LaleOperator, x::DataFrame) = nothing
+   fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
+   transform(o::Machine, x::DataFrame) = transform!(o,x)
 end
 
-include("lalelearner.jl")
-using .LaleLearners
-export LaleLearner, lalelearners
+using .LaleAbsTypes
 
-include("lalepreprocessor.jl")
-using .LalePreprocessors
-export LalePreprocessor, lalepreprocessor
+include("laleop.jl")
+using .LaleOps
+export LaleOp, skops, autogenops, lalelibops
 
-include("lalelibops.jl")
+include("lalelibop.jl")
 using .LaleLibOps
-export NoOp
 export LaleOptimizer, laleoptimizers
 export >>, +, |, |>, &
 
 export laleoperator
-export fit, transform
+export fit, transform, fit!, transform!
 
-function laleoperator(name::String; args...)::Union{LalePreprocessor,LaleLearner}
-   lrs = keys(LaleLearners.learner_dict)
-   prp = keys(LalePreprocessors.preprocessor_dict)
-   if name ∈ lrs
-      obj=LaleLearner(name; args...)
-   elseif name ∈ prp
-      obj=LalePreprocessor(name; args...)
-   else
+function laleoperator(name::String,type::String="sklearn"; args...)
+   try
+      obj = LaleOp(name,type;args...)
+      return obj
+   catch ArgumentError
+      sk = keys(LaleOps.sk_dict)
+      ag = keys(LaleOps.ag_dict)
+      ll = keys(LaleOps.ll_dict)
       println("Please choose among these pipeline elements:")
-      println([prp...,lrs...])
+      println()
+      println("sklearn: ", [sk...])
+      println()
+      println("autogen: ", [ag...])
+      println()
+      println("lale: ",    [ll...])
+      println()
       throw(ArgumentError("$name does not exist"))
    end
-   return obj
 end
 
 end
