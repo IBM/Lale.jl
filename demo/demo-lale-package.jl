@@ -30,12 +30,12 @@ Xcl  = iris[:,1:4] |> DataFrame
 Ycl  = iris[:,5]   |> Vector
 
 # lale ops
-pca     = LalePreprocessor("PCA")
-rb      = LalePreprocessor("RobustScaler","autogen")
-noop    = LalePreprocessor("NoOp","lale")
-rfr     = LaleLearner("RandomForestRegressor")
-rfc     = LaleLearner("RandomForestClassifier")
-treereg = LaleLearner("DecisionTreeRegressor")
+pca     = laleoperator("PCA")
+rb      = laleoperator("RobustScaler","autogen")
+noop    = laleoperator("NoOp","lale")
+rfr     = laleoperator("RandomForestRegressor")
+rfc     = laleoperator("RandomForestClassifier")
+treereg = laleoperator("DecisionTreeRegressor")
 # amlp ops
 ohe  = OneHotEncoder()
 catf = CatFeatureSelector()
