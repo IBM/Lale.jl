@@ -31,8 +31,8 @@ Ycl  = iris[:,5]   |> Vector
 
 # lale ops
 pca     = LalePreprocessor("PCA")
-rb      = LalePreprocessor("RobustScaler")
-noop    = LalePreprocessor("NoOp")
+rb      = LalePreprocessor("RobustScaler","autogen")
+noop    = LalePreprocessor("NoOp","lale")
 rfr     = LaleLearner("RandomForestRegressor")
 rfc     = LaleLearner("RandomForestClassifier")
 treereg = LaleLearner("DecisionTreeRegressor")
