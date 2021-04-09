@@ -35,7 +35,7 @@ function lale_demo()
   println("X features:")  ;println(first(Xcl,5))
   println("\nY features:"); println(first(Ycl,5))
   pauseme("\nLet's define some Lale Operators")
-  pauseme("""
+  println("""
     julia code:
           pca     = laleoperator("PCA")
           rb      = laleoperator("RobustScaler","autogen")
@@ -48,7 +48,7 @@ function lale_demo()
   noop    = laleoperator("NoOp","lale")
   rfc     = laleoperator("RandomForestClassifier")
   treec   = laleoperator("DecisionTreeClassifier")
-  println("Let's build a simple Lale pipeline for classification and optimize it.")
+  pauseme("Let's build a simple Lale pipeline for classification and optimize it.")
   println("""
     julia code:
         lalepipe    = (rb + pca + noop) >>  (rfc | treec)
