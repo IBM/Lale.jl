@@ -32,7 +32,7 @@ function lale_demo()
   println(">>>>>>>>>><<<<<<<<<<")
   println("\n")
   pauseme("Let's start by loading the Iris plant dataset.")
-  println("X features:");println(first(Xcl,5))
+  println("X features:")  ;println(first(Xcl,5))
   println("\nY features:"); println(first(Ycl,5))
   pauseme("\nLet's define some Lale Operators")
   pauseme("""
