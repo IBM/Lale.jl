@@ -9,6 +9,8 @@ Lale.jl is a Julia wrapper of Python's [Lale](https://github.com/ibm/lale) libra
 
 Instructions for Lale developers can be found [here](./docs/DevInstruction.md).
 
+For a quick notebook demo: [Lale Notebook Demo](./demo/demo-lale-package-notebook.ipynb)
+
 ### Package Features
 - __automation__: provides a consistent high-level interface to existing pipeline search tools including Hyperopt, GridSearchCV, and SMAC
 - __correctness checks__: uses JSON Schema to catch mistakes when there is a mismatch between hyperparameters and their type, or between data and operators
@@ -20,7 +22,7 @@ and Decision Tree Regression (DTree):
 
 ```julia
 lalepipe  = (PCA + NoOp) >> (RFR | DTree)
-laleopt   = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
+laleopt   = LalePipeOptimizer(lalepipe,max_evals = 10,cv = 3)
 laletr    = fit!(laleopt, Xtrain,Ytrain)
 pred      = transform!(laletr,Xtest)
 ```
@@ -75,14 +77,14 @@ treereg = laleoperator("DecisionTreeRegressor")
 
 # Lale regression
 lalepipe  = (pca + noop) >>  (rfr | treereg )
-lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
+lale_hopt = LalePipeOptimizer(lalepipe,max_evals = 10,cv = 3)
 laletrain = fit(lale_hopt,Xreg,Yreg)
 lalepred  = transform(laletrain,Xreg)
 lalermse  = score(:rmse,lalepred,Yreg)
 
 # Lale classification
 lalepipe  = (rb + pca) |> rfc
-lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 10,cv = 3)
+lale_hopt = LalePipeOptimizer(lalepipe,max_evals = 10,cv = 3)
 laletrain = fit(lale_hopt,Xcl,Ycl)
 lalepred  = transform(laletrain,Xcl)
 laleacc   = score(:accuracy,lalepred,Ycl)

@@ -18,7 +18,8 @@ export fit, transform
 import Base: >>,|,+,|>,&
 export  >>,|,+,|>,&
 
-export LaleOptimizer, laleoptimizers
+export LalePipeOptimizer, lalepipeoptimizers
+export LalePipe, visualize
 
 const optim_dict    = Dict{String, PyObject}()
 const LALELIBS      = PyNULL()
@@ -37,66 +38,66 @@ function __init__()
    global _make_union_nc      = LALEOPS.make_union_no_concat
 end
 
-⊖(a::PyObject,b::PyObject)          = _make_pipeline(a,b)
-|>(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⊖ b.model[:laleobj]
-|>(a::PyObject,b::LaleOperator)     = a ⊖ b.model[:laleobj]
-|>(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⊖ b
->>(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⊖ b.model[:laleobj]
->>(a::PyObject,b::LaleOperator)     = a ⊖ b.model[:laleobj]
->>(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⊖ b
+# hide pyobject
+struct LalePipe <: LaleOperator
+   model::Dict{Symbol, Any}
+   LalePipe(x::PyObject) = new(Dict{Symbol,Any}(:laleobj=>x))
+end
 
-⊕(a::PyObject,b::PyObject)          = _make_union(a,b)
-+(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊕ b.model[:laleobj]
-+(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj]
-+(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b
+⊖(a::PyObject,b::PyObject)          = _make_pipeline(a,b) 
+|>(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⊖ b.model[:laleobj] |> LalePipe
+|>(a::PyObject,b::LaleOperator)     = a ⊖ b.model[:laleobj] |> LalePipe
+|>(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⊖ b |> LalePipe
+>>(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⊖ b.model[:laleobj] |> LalePipe
+>>(a::PyObject,b::LaleOperator)     = a ⊖ b.model[:laleobj] |> LalePipe
+>>(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⊖ b |> LalePipe
 
-⨸(a::PyObject,b::PyObject)           = _make_union_nc(a,b)
-(&)(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⨸ b.model[:laleobj]
-(&)(a::PyObject,b::LaleOperator)     = a ⨸ b.model[:laleobj]
-(&)(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⨸ b
+⊕(a::PyObject,b::PyObject)          = _make_union(a,b) 
++(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊕ b.model[:laleobj] |> LalePipe
++(a::PyObject,b::LaleOperator)      = a ⊕ b.model[:laleobj] |> LalePipe
++(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊕ b |> LalePipe
 
-⊗(a::PyObject,b::PyObject)          = _make_choice(a,b)
-|(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊗ b.model[:laleobj]
-|(a::PyObject,b::LaleOperator)      = a ⊗ b.model[:laleobj]
-|(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊗ b
+⨸(a::PyObject,b::PyObject)           = _make_union_nc(a,b) 
+(&)(a::LaleOperator,b::LaleOperator) = a.model[:laleobj] ⨸ b.model[:laleobj] |> LalePipe
+(&)(a::PyObject,b::LaleOperator)     = a ⨸ b.model[:laleobj] |> LalePipe
+(&)(a::LaleOperator,b::PyObject)     = a.model[:laleobj] ⨸ b |> LalePipe
 
-mutable struct LaleOptimizer <: LaleOperator
+⊗(a::PyObject,b::PyObject)          = _make_choice(a,b) 
+|(a::LaleOperator,b::LaleOperator)  = a.model[:laleobj] ⊗ b.model[:laleobj] |> LalePipe
+|(a::PyObject,b::LaleOperator)      = a ⊗ b.model[:laleobj] |> LalePipe
+|(a::LaleOperator,b::PyObject)      = a.model[:laleobj] ⊗ b |> LalePipe
+
+mutable struct LalePipeOptimizer <: LaleOperator
    name::String
    model:: Dict{Symbol,Any}
 
-   function LaleOptimizer(args=Dict{Symbol,Any}())
+   function LalePipeOptimizer(args=Dict{Symbol,Any}())
       default_args=Dict{Symbol,Any}(
             :lalepipe => PyNULL(),
-            :name => "laleoptimizer",
-            :optimizer => "Hyperopt",
+            :name => "LalePipeOptimizer",
             :impl_args => Dict{Symbol,Any}(
+                :cv        => 3,
+                :max_evals => 10,
             )
       )
       cargs = nested_dict_merge(default_args, args)
       cargs[:name] = cargs[:name]*"_"*randstring(3)
-      opt = cargs[:optimizer]
-      if !(opt in keys(optim_dict))
-         println("$opt is not supported.")
-         println()
-         laleoptimizers()
-         error("Argument keyword error")
-      end
       @assert cargs[:lalepipe] != PyNULL()
       new(cargs[:name],cargs)
    end
 end
 
-function LaleOptimizer(pipe::PyObject, args::Dict)
-   LaleOptimizer(Dict(:lalepipe => pipe, args...))
+function LalePipeOptimizer(pipe::LalePipe, args::Dict)
+   LalePipeOptimizer(Dict(:lalepipe => pipe.model[:laleobj], args...))
 end
 
-function LaleOptimizer(pipe::PyObject,optimizer::String="Hyperopt"; args...)
-   LaleOptimizer(Dict(:lalepipe => pipe, :optimizer=>optimizer, :impl_args => Dict(pairs(args))))
+function LalePipeOptimizer(pipe::LalePipe; args...)
+   LalePipeOptimizer(Dict(:lalepipe => pipe.model[:laleobj], :impl_args => Dict(pairs(args))))
 end
 
-function laleoptimizers()
+function lalepipeoptimizers()
   opts = keys(optim_dict) |> collect |> x -> sort(x,lt=(x,y)->lowercase(x)<lowercase(y))
-  println("syntax: LaleOptimizer(name::String, args::Dict=Dict())")
+  println("syntax: LalePipeOptimizer(name::String, args::Dict=Dict())")
   println("where 'name can be one of:")
   println()
   [print(opt," ") for opt in opts]
@@ -106,28 +107,34 @@ function laleoptimizers()
   println("Note: Consult Lale online help for more details about the auto_configure arguments.")
 end
 
-function fit!(lopt::LaleOptimizer, xx::DataFrame, y::Vector=Vector())
+function fit!(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector())
    Xpd = Pandas.DataFrame(xx).pyo
    Ypd = Pandas.DataFrame(y).pyo
    margs = lopt.model[:impl_args]
-   optim = lopt.model[:optimizer]
    pipe = lopt.model[:lalepipe]
-   trained = pipe.auto_configure(Xpd, Ypd, optimizer=optim_dict[optim]; margs...)
+   hyperopt = LALELIBS.Hyperopt(estimator=pipe; margs...)
+   trained = hyperopt.fit(Xpd,Ypd)
    lopt.model[:trained] = trained
 end
 
-function transform!(lopt::LaleOptimizer, xx::DataFrame)
+function transform!(lopt::LalePipeOptimizer, xx::DataFrame)
    Xpd = Pandas.DataFrame(xx).pyo
    trainedmodel = lopt.model[:trained]
    trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
 end
 
-function fit(lopt::LaleOptimizer, xx::DataFrame, y::Vector=Vector()) 
+function fit(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector()) 
    fit!(lopt,xx,y)
    loptcopy = deepcopy(lopt)
    return loptcopy
 end
 
-transform(lopt::LaleOptimizer, xx::DataFrame) = transform!(lopt,xx)
+transform(lopt::LalePipeOptimizer, xx::DataFrame) = transform!(lopt,xx)
+
+function visualize(lopt::LalePipeOptimizer)
+   auto_trained = lopt.model[:trained]
+   best_pipeline = auto_trained.get_pipeline()
+   best_pipeline.visualize()
+end
 
 end

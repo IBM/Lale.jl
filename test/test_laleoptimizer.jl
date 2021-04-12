@@ -1,4 +1,4 @@
-module TestLaleOptimizer
+module TestLalePipeOptimizer
 
 using Random
 using Test
@@ -20,9 +20,9 @@ function pipeline_test()
    pca     = LaleOp("PCA","sklearn")
    rb      = LaleOp("RobustScaler","autogen")
    rfr     = LaleOp("RandomForestRegressor")
-   rfc     = LaleOp("RandomForestClassifier")
+   rfc     = laleoperator("RandomForestClassifier")
    treereg = LaleOp("DecisionTreeRegressor")
-   noop    = LaleOp("NoOp","lale")
+   noop    = laleoperator("NoOp","lale")
 
    @test_throws ArgumentError LaleOp("PCAN")
    @test_throws ArgumentError LaleOp("RandomForestClassifers")
@@ -38,7 +38,7 @@ function pipeline_test()
 
    # regression
    lalepipe   = (pca + noop) >>  (rfr | treereg )
-   lale_hopt  = LaleOptimizer(lalepipe,"Hyperopt",max_evals  = 3,cv = 3)
+   lale_hopt  = LalePipeOptimizer(lalepipe,max_evals  = 3,cv = 3)
    lalepred   = fit_transform!(lale_hopt,X,Y)
    lalermse   = score(:rmse,lalepred,Y)
 
@@ -50,7 +50,7 @@ function pipeline_test()
    
    # classification 
    lalepipe =  (pca  >>  rfc)
-   lale_hopt = LaleOptimizer(lalepipe,"Hyperopt",max_evals = 3,cv = 3)
+   lale_hopt = LalePipeOptimizer(lalepipe,max_evals = 3,cv = 3)
    lalepred  = fit_transform!(lale_hopt,XC,YC)
    laleacc   = score(:accuracy,lalepred,YC)
 
