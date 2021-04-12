@@ -51,7 +51,8 @@ export LaleOp, skops, autogenops, lalelibops
 
 include("lalelibop.jl")
 using .LaleLibOps
-export LaleOptimizer, laleoptimizers
+export LalePipeOptimizer, lalepipeoptimizers
+export LalePipe, visualize
 export >>, +, |, |>, &
 
 export laleoperator
