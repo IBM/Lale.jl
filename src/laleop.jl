@@ -212,7 +212,7 @@ function transform!(lale::LaleOp, xx::DataFrame)
    elseif :predict ∈ propertynames(laleobj)
       return collect(laleobj.predict(x))
    else
-      throw(Error("transform error"))
+      throw(KeyError("predict/transform function not available"))
    end
 end
 
