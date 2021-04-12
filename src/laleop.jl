@@ -207,9 +207,9 @@ function transform!(lale::LaleOp, xx::DataFrame)
    x = deepcopy(xx)|> Array
    laleobj = lale.model[:laleobj]
    # transform is predict for learners
-   if :transform ∈ propertynames(laleobj)
+   if :predict ∈ propertynames(laleobj)
       return collect(laleobj.transform(x)) |> x -> DataFrame(x,:auto)
-   elseif :predict ∈ propertynames(laleobj)
+   elseif :transform ∈ propertynames(laleobj)
       return collect(laleobj.predict(x))
    else
       throw(KeyError("predict/transform function not available"))

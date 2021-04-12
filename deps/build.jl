@@ -13,7 +13,7 @@ function installmaclinux()
          subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "--upgrade", "--force-reinstall", PIP_PACKAGES...])
          @info "lale succesfully installed"
       catch
-         println("scikit-learn failed to install")
+         println("lale failed to install")
       end
    end
 end
