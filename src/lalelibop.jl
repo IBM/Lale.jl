@@ -134,7 +134,11 @@ transform(lopt::LalePipeOptimizer, xx::DataFrame) = transform!(lopt,xx)
 function visualize(lopt::LalePipeOptimizer)
    auto_trained = lopt.model[:trained]
    best_pipeline = auto_trained.get_pipeline()
-   best_pipeline.visualize()
+   best_pipeline.visualize(ipython_display=false)
+end
+
+function visualize(lpipe::LalePipe)
+   lpipe.model[:laleobj].visualize(ipython_display=false)
 end
 
 end
