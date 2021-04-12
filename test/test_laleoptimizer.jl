@@ -8,10 +8,10 @@ using DataFrames: DataFrame
 using AutoMLPipeline.Utils
 
 const IRIS = getiris()
-const X = IRIS[:,1:3] |> DataFrame
-const XC = IRIS[:,1:4] |> DataFrame
-const YC = IRIS[:,5] |> Vector
-const Y = IRIS[:,4] |> Vector
+const X    = IRIS[:,1:3] |> DataFrame
+const XC   = IRIS[:,1:4] |> DataFrame
+const YC   = IRIS[:,5] |> Vector
+const Y    = IRIS[:,4] |> Vector
 
 
 function pipeline_test()
@@ -36,20 +36,32 @@ function pipeline_test()
    res = transform(p,X)
    @assert size(res,2) == 3
 
+   amlpipe = @pipeline  (pca + noop) |> (rfr * treereg)
+   amlpred = fit_transform!(amlpipe,X,Y)
+   amlprmse=score(:rmse,amlpred,Y)
+
    # regression
    lalepipe   = (pca + noop) >>  (rfr | treereg )
    lale_hopt  = LalePipeOptimizer(lalepipe,max_evals  = 3,cv = 3)
    lalepred   = fit_transform!(lale_hopt,X,Y)
    lalermse   = score(:rmse,lalepred,Y)
 
-   amlpipe = @pipeline  (pca + noop) |> (rfr * treereg)
-   amlpred = fit_transform!(amlpipe,X,Y)
-   amlprmse=score(:rmse,amlpred,Y)
+   @test amlprmse < lalermse
+
+   laletrained = fit(lale_hopt,X,Y)
+   lalepred    = transform(laletrained,X)
+   lalermse    = score(:rmse,lalepred,Y)
+
+   @test amlprmse < lalermse
+
+   laletrained = fit(lale_hopt,X,Y)
+   lalepred    = predict(laletrained,X)
+   lalermse    = score(:rmse,lalepred,Y)
 
    @test amlprmse < lalermse
    
    # classification 
-   lalepipe =  (pca  >>  rfc)
+   lalepipe  = (pca  >>  rfc)
    lale_hopt = LalePipeOptimizer(lalepipe,max_evals = 3,cv = 3)
    lalepred  = fit_transform!(lale_hopt,XC,YC)
    laleacc   = score(:accuracy,lalepred,YC)
@@ -58,6 +70,14 @@ function pipeline_test()
    amlpred = fit_transform!(amlpipe,XC,YC)
    amlpacc = score(:accuracy,amlpred,YC)
    
+   @test abs(amlpacc - laleacc) < 50.0
+
+   lalepipe    = (pca  >>  rfc)
+   lale_hopt   = LalePipeOptimizer(lalepipe,max_evals = 3,cv = 3)
+   laletrained = fit(lale_hopt,XC,YC)
+   lalepred    = predict(laletrained,XC)
+   laleacc     = score(:accuracy,lalepred,YC)
+
    @test abs(amlpacc - laleacc) < 50.0
    
    plr = @pipeline (catf |> ohe) + (numf |> rb |> pca) |> rfr

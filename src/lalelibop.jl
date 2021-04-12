@@ -10,7 +10,7 @@ using ..Utils
 using ..LaleAbsTypes
 
 import ..AbsTypes: fit!, transform!
-import ..LaleAbsTypes: fit, transform
+import ..LaleAbsTypes: fit, transform, predict
 
 export fit!, transform!
 export fit, transform, predict

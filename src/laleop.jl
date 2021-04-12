@@ -10,7 +10,7 @@ using ..LaleAbsTypes
 using ..Utils
 
 import ..AbsTypes: fit!, transform!
-import ..LaleAbsTypes: fit, transform
+import ..LaleAbsTypes: fit, transform, predict
 
 export fit!, transform!, fit, transform, predict
 export LaleOp, skops, autogenops, lalelibops
