@@ -51,7 +51,7 @@ end
 end
 
 function fit_transform_reg(model::LaleOp,in::DataFrame,out::Vector)
-   @test sum((transform!(model,in) .- out).^2)/length(out) < 2.0
+   @test sum((transform(model,in) .- out).^2)/length(out) < 2.0
 end
 @testset "lale regressors" begin
    Random.seed!(123)

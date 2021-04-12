@@ -12,7 +12,7 @@ using ..Utils
 import ..AbsTypes: fit!, transform!
 import ..LaleAbsTypes: fit, transform
 
-export fit!, transform!, fit, transform
+export fit!, transform!, fit, transform, predict
 export LaleOp, skops, autogenops, lalelibops
 
 const sk_dict = Dict{String,PyObject}() 
@@ -222,7 +222,8 @@ function fit(lale::LaleOp, xx::DataFrame, y::Vector=Vector())
    return lcopy
 end
 
-transform(lale::LaleOp, xx::DataFrame)=transform!(lale,xx)
+transform(lale::LaleOp, xx::DataFrame) = transform!(lale,xx)
+predict(lale::LaleOp, xx::DataFrame)   = transform!(lale,xx)
 
 end
 

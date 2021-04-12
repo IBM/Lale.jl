@@ -13,7 +13,7 @@ import ..AbsTypes: fit!, transform!
 import ..LaleAbsTypes: fit, transform
 
 export fit!, transform!
-export fit, transform
+export fit, transform, predict
 
 import Base: >>,|,+,|>,&
 export  >>,|,+,|>,&
@@ -130,6 +130,7 @@ function fit(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector())
 end
 
 transform(lopt::LalePipeOptimizer, xx::DataFrame) = transform!(lopt,xx)
+predict(lopt::LalePipeOptimizer, xx::DataFrame) = transform!(lopt,xx)
 
 function visualize(lopt::LalePipeOptimizer)
    auto_trained = lopt.model[:trained]

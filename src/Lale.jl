@@ -36,11 +36,12 @@ module LaleAbsTypes
    using ..AbsTypes
    using DataFrames: DataFrame
 
-   export LaleOperator, fit, transform
+   export LaleOperator, fit, transform, predict
 
    abstract type LaleOperator <: Learner end
    fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
    transform(o::Machine, x::DataFrame) = transform!(o,x)
+   predict(o::Machine, x::DataFrame) = transform!(o,x)
 end
 
 using .LaleAbsTypes
@@ -56,7 +57,7 @@ export LalePipe, visualize
 export >>, +, |, |>, &
 
 export laleoperator
-export fit, transform, fit!, transform!
+export fit!, transform!, fit, transform, predict
 
 function laleoperator(name::String,type::String="sklearn"; args...)
    try
