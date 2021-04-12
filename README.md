@@ -9,6 +9,8 @@ Lale.jl is a Julia wrapper of Python's [Lale](https://github.com/ibm/lale) libra
 
 Instructions for Lale developers can be found [here](./docs/DevInstruction.md).
 
+For a quick notebook demo: [Lale Notebook Demo](./demo/demo-lale-package-notebook.ipynb)
+
 ### Package Features
 - __automation__: provides a consistent high-level interface to existing pipeline search tools including Hyperopt, GridSearchCV, and SMAC
 - __correctness checks__: uses JSON Schema to catch mistakes when there is a mismatch between hyperparameters and their type, or between data and operators
