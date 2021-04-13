@@ -1,4 +1,4 @@
-### Lale.jl: Julia port of python's lale package
+### Lale.jl: Julia wrapper of python's lale package
 
 | **Documentation** | **Build Status** | **Help** |
 |:---:|:---:|:---:|
