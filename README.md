@@ -37,7 +37,7 @@ The *pipe combinator*, `p1 >> p2`, first runs sub-pipeline
 The *union combinator*, `p1 + p2`, runs sub-pipelines `p1` and `p2` separately
 over the same data, and then concatenates the output columns of both.
 The *or combinator*, `p1 | p2`, creates an algorithmic choice for the optimizer
-to search and select which among `p1` and `p2` yields better results.
+to search and select which between `p1` and `p2` yields better results.
 
 ### Installation
 Lale is in the Julia General package registry. The latest
