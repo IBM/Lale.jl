@@ -1,4 +1,4 @@
-module TestLalePipeOptimizer
+module TestLalePipeOptimizerSK
 
 using Random
 using Test
@@ -17,8 +17,8 @@ const Y    = IRIS[:,4] |> Vector
 function pipeline_test()
 
    # lale ops
-   pca     = LaleOp("PCA","sklearn")
-   rb      = LaleOp("RobustScaler","autogen")
+   pca     = LaleOp("PCA")
+   rb      = LaleOp("RobustScaler")
    rfr     = LaleOp("RandomForestRegressor")
    rfc     = laleoperator("RandomForestClassifier")
    treereg = LaleOp("DecisionTreeRegressor")
