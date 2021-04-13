@@ -96,8 +96,8 @@ laleacc   = score(:accuracy,lalepred,Ycl)
 
 [discourse-tag-url]: https://discourse.julialang.org/
 
-[gitter-url]: https://gitter.im/AutoMLPipelineLearning/community
-[gitter-img]: https://badges.gitter.im/ppalmes/TSML.jl.svg
+[gitter-url]: https://gitter.im/Lale/community
+[gitter-img]: https://badges.gitter.im/ppalmes/Lale.jl.svg
 
 [slack-img]: https://img.shields.io/badge/chat-on%20slack-yellow.svg
 [slack-url]: https://julialang.slack.com/
