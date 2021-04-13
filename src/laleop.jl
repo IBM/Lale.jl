@@ -22,17 +22,10 @@ const SK   = PyNULL()
 const AG   = PyNULL()
 const LL   = PyNULL()
 
-const SKVec=["AdaBoostClassifier", "BaggingClassifier", "DecisionTreeClassifier", "ExtraTreesClassifier", "GradientBoostingClassifier", "RandomForestClassifier", "KNeighborsClassifier", "LinearSVC", "MLPClassifier", "PassiveAggressiveClassifier", "RidgeClassifier", "SGDClassifier", "SVC", "VotingClassifier", "QuadraticDiscriminantAnalysis", "LogisticRegression", "GaussianNB", "MultinomialNB", "SVR", "Ridge", "SGDRegressor", "KNeighborsRegressor", "DecisionTreeRegressor", "RandomForestRegressor", "ExtraTreesRegressor", "AdaBoostRegressor", "GradientBoostingRegressor","FeatureAgglomeration","NMF","PCA","SelectKBest","RFE","SimpleImputer","MissingIndicator", "RobustScaler", "LinearRegression"]
+include("sklearn-const.jl") # SKVec
+include("autogen-const.jl") # AGVec
+include("liblale-const.jl") # LLVec
 
-
-const AGVec=["StandardScaler","FunctionTransformer","IncrementalPCA","AdaBoostClassifier", "AdaBoostRegressor","BayesianRige","BenoulliNB","BernoulliRBM", "DecisionTreeClassifier","DecisionTreeRegressor","ElasticNet","ElasticNetCV", "ExtraTreesClassifier",  "ExtraTreesRegressor","FastICA","GaussianNB","GaussianRandomProjection","GradientBoostingClassifier","GradientBoostingRegressor","KBinsDiscretizer","KernelPCA","KernelRidge","KMeans","KNeighborsClassifier","KNeighborsRegressor","Binarizer", "LabelBinarizer","LabelEncoder","LabelPropagation","LabelSpreading","Lars","LarsCV","Lasso","LassoCV","LassoLars","LassoLarsCV","LassoLarsIC","LatentDirichletAllocation","LinearDiscriminantAnalysis","LinearSVC","MaxAbsScaler","MiniBatchDictionaryLearning","MiniBatchKMeans","MiniBatchSparsePCA","MinMaxScaler","MissingIndicator", "MLPClassifier","MultinomialNB","MultiTaskLasso","MultiTaskLassoCV","NMF","Normalizer","Nystroem","OneHotEncoder","OrdinalEncoder","OrthogonalMatchingPursuit","OrthogonalMatchingPursuitCV","PCA","Perceptron","PLSCanonical","PLSSVD","PolynomialFeatures","PowerTransformer","QuadraticDiscriminantAnalysis","QuantileTransformer", "RandomForestClassifier","RandomForestRegressor","RandomTreesEmbedding","RBFSampler","Ridge","RidgeClassifier","RidgeCV","RobustScaler","SGDClassifier", "SGDRegressor","SimpleImputer","SkewedChi2Sampler","SparsePCA","SparseRandomProjection", "SVC","SVR","TransformedTargetRegressor","TruncatedSVD","FactorAnalysis","GaussianProcessClassifier","CalibratedClassifierCV","MultiLabelBinarizer","MultiTaskElasticNet","MultiTaskElasticNetCV","NuSVC","RadiusNeighborsClassifier","RidgeClassifierCV","NuSVR","TheilSenRegressor","RANSACRegressor","MLPRegressor","PLSRegression","RadiusNeighborsRegressor","LogisticRegressionCV","HuberRegressor","LogisticRegression","LinearRegression","GaussianProcessRegressor","ARDRegression"]
-
-
-const LLVec = ["Aggregate","AutoPipeline","BaselineClassifier","BaselineRegressor",
-               "Batching","Booth","ConcatFeatures","GridSearchCV",
-               "GroupBy","Hyperopt","IdentityWrapper",
-               "Join","Map","NoOp","Observing","Project","Relational",
-               "SampleBasedVoting","Scan","SMAC","TopKVotingClassifier"]
 
 function __init__()
    copy!(SK, pyimport("lale.lib.sklearn"))
