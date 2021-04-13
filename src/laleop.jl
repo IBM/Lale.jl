@@ -193,13 +193,14 @@ function fit!(lale::LaleOp, xx::DataFrame, y::Vector=Vector())
 
   # Train
   modelobj = py_learner(;impl_args...)
+  trained = PyNULL
   if :predict ∈ propertynames(modelobj)
      # learner
-     modelobj.fit(x,y)
+     trained=modelobj.fit(x,y)
   else # transformer
-     modelobj.fit(x)
+     trained=modelobj.fit(x)
   end
-  lale.model[:laleobj]   = modelobj
+  lale.model[:laleobj]   = trained
   lale.model[:impl_args] = impl_args
 end
 
