@@ -63,7 +63,16 @@ julia> Pkg.add("IJulia")
 julia> using IJulia
 julia> notebook(dir=pwd())
 ```
-or Pluto Notebook
+
+You can also install kernels to run Julia with multithreading:
+```julia
+julia> using IJulia
+julia> installkernel("Julia (4 threads)", env=Dict("JULIA_NUM_THREADS"=>"4"))
+```
+More info can be found in IJulia [documentation](https://julialang.github.io/IJulia.jl/stable/manual/installation/).
+
+
+You can also use Pluto Notebook:
 ```julia
 julia> using Pkg
 julia> Pkg.add("Pluto")
