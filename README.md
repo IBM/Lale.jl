@@ -70,7 +70,7 @@ Ycl  = iris[:,5]   |> Vector
 
 # lale ops
 pca     = laleoperator("PCA")
-rb      = laleoperator("RobustScaler","autogen")
+rb      = laleoperator("RobustScaler")
 noop    = laleoperator("NoOp","lale")
 rfr     = laleoperator("RandomForestRegressor")
 rfc     = laleoperator("RandomForestClassifier")
