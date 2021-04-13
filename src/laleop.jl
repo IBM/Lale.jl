@@ -194,7 +194,7 @@ function fit!(lale::LaleOp, xx::DataFrame, y::Vector=Vector())
   # Train
   modelobj = py_learner(;impl_args...)
   trained = PyNULL
-  if :predict ∈ propertynames(modelobj)
+  if :predict ∈ lalepropertynames(modelobj)
      # learner
      trained=modelobj.fit(x,y)
   else # transformer
@@ -208,9 +208,9 @@ function transform!(lale::LaleOp, xx::DataFrame)
    x = deepcopy(xx)|> Array
    laleobj = lale.model[:laleobj]
    # transform is predict for learners
-   if :predict ∈ propertynames(laleobj)
+   if :predict ∈ lalepropertynames(laleobj)
       return collect(laleobj.predict(x))
-   elseif :transform ∈ propertynames(laleobj)
+   elseif :transform ∈ lalepropertynames(laleobj)
       return collect(laleobj.transform(x)) |> x -> DataFrame(x,:auto)
    else
       throw(KeyError("predict/transform function not available"))

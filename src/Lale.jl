@@ -35,13 +35,17 @@ import AMLPipelineBase.AbsTypes: fit!, transform!
 module LaleAbsTypes
    using ..AbsTypes
    using DataFrames: DataFrame
+   using PyCall
+   using PyCall: PyIterator, inspect
 
-   export LaleOperator, fit, transform, predict
+   export LaleOperator, fit, transform, predict, lalepropertynames
 
    abstract type LaleOperator <: Learner end
    fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
    transform(o::Machine, x::DataFrame) = transform!(o,x)
    predict(o::Machine, x::DataFrame) = transform!(o,x)
+
+   lalepropertynames(o::PyObject) = ispynull(o) ? Symbol[] : map(x->Symbol(first(x)), PyIterator{PyObject}(pycall(inspect."getmembers", PyObject, o)))
 end
 
 using .LaleAbsTypes
