@@ -32,9 +32,9 @@ function pipeline_test()
    catf = CatFeatureSelector()
    numf = NumFeatureSelector()
 
-   p=fit(pca,X)
-   res = transform(p,X)
-   @assert size(res,2) == 3
+   #p=fit(pca,X)
+   #res = transform(p,X)
+   #@assert size(res,2) == 3
 
    amlpipe = @pipeline  (pca + noop) |> (rfr * treereg)
    amlpred = fit_transform!(amlpipe,X,Y)
