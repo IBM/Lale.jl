@@ -57,9 +57,7 @@ pkg> add Lale
 #### Sample Lale Workflow
 ```julia
 using Lale
-
-using DataFrames
-using AutoMLPipeline: Utils
+using DataFrames: DataFrame
 
 # load data
 iris = getiris()
@@ -67,6 +65,12 @@ Xreg = iris[:,1:3] |> DataFrame
 Yreg = iris[:,4]   |> Vector
 Xcl  = iris[:,1:4] |> DataFrame
 Ycl  = iris[:,5]   |> Vector
+
+# regression dataset
+trXreg,trYreg,tstXreg,tstYreg = train_test_split(Xreg,Yreg; testprop=0.20)
+
+# classification dataset
+trXcl,trYcl,tstXcl,tstYcl = train_test_split(Xcl,Ycl; testprop=0.20)
 
 # lale ops
 pca     = laleoperator("PCA")
@@ -79,16 +83,34 @@ treereg = laleoperator("DecisionTreeRegressor")
 # Lale regression
 lalepipe  = (pca + noop) >>  (rfr | treereg )
 lale_hopt = LalePipeOptimizer(lalepipe,max_evals = 10,cv = 3)
-laletrain = fit(lale_hopt,Xreg,Yreg)
-lalepred  = transform(laletrain,Xreg)
-lalermse  = score(:rmse,lalepred,Yreg)
+laletrain = fit(lale_hopt,trXreg,trYreg)
+lalepred  = transform(laletrain,tstXreg)
+score(:rmse,lalepred,tstYreg) |> println
 
 # Lale classification
 lalepipe  = (rb + pca) |> rfc
 lale_hopt = LalePipeOptimizer(lalepipe,max_evals = 10,cv = 3)
-laletrain = fit(lale_hopt,Xcl,Ycl)
-lalepred  = transform(laletrain,Xcl)
-laleacc   = score(:accuracy,lalepred,Ycl)
+laletrain = fit(lale_hopt,trXcl,trYcl)
+lalepred  = transform(laletrain,tstXcl)
+score(:accuracy,lalepred,tstYcl) |> println
+```
+Moreover, Lale is also compatible with [AutoMLPipeline](https://github.com/IBM/AutoMLPipeline.jl) `@pipeline` syntax:
+```julia
+# regression pipeline
+pipe         = @pipeline (pca + rb) |>  rfr
+model        = fit(pipe,trXreg, trYreg)
+pred         = transform(model,tstXreg)
+regperf(x,y) = score(:rmse,x,y)
+regperf(pred, tstYreg) |> println
+crossvalidate(pipe,Xreg,Yreg,perf)
+
+# classification pipeline
+pipe           = @pipeline (pca + noop) |>  rfc
+model          = fit(pipe,trXcl, trYcl)
+pred           = transform(model,tstXcl)
+classperf(x,y) = score(:accuracy,x,y)
+classperf(pred, tstYcl) |> println
+crossvalidate(pipe,Xcl,Ycl,perf)
 ```
 
 
