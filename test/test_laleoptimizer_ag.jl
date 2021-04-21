@@ -5,14 +5,12 @@ using Test
 using Lale
 using Statistics
 using DataFrames: DataFrame
-using AutoMLPipeline.Utils
 
 const IRIS = getiris()
 const X    = IRIS[:,1:3] |> DataFrame
 const XC   = IRIS[:,1:4] |> DataFrame
 const YC   = IRIS[:,5] |> Vector
 const Y    = IRIS[:,4] |> Vector
-
 
 function pipeline_test()
 
@@ -82,8 +80,10 @@ function pipeline_test()
    
    plr = @pipeline (catf |> ohe) + (numf |> rb |> pca) |> rfr
    plc = @pipeline (catf |> ohe) + (numf |> rb |> pca) |> rfc
-   @test crossvalidate(plr,X,Y,"mean_absolute_error",3,false).mean < 0.3
-   @test crossvalidate(plc,XC,YC,"accuracy_score",3,false).mean > 0.8
+   perfreg(x,y) = score(:rmse,x,y)
+   perfcl(x,y) = score(:accuracy,x,y)
+   @test crossvalidate(plr,X,Y,perfreg).mean < 0.3
+   @test crossvalidate(plc,XC,YC,perfcl).mean > 80.0
 
 end
 @testset "Lale Pipeline Optimizer" begin
