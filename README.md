@@ -1,4 +1,4 @@
-### Lale.jl: Julia port of python's lale package
+### Lale.jl: Julia wrapper of python's lale package
 
 | **Documentation** | **Build Status** | **Help** |
 |:---:|:---:|:---:|
@@ -37,7 +37,7 @@ The *pipe combinator*, `p1 >> p2`, first runs sub-pipeline
 The *union combinator*, `p1 + p2`, runs sub-pipelines `p1` and `p2` separately
 over the same data, and then concatenates the output columns of both.
 The *or combinator*, `p1 | p2`, creates an algorithmic choice for the optimizer
-to search and select which among `p1` and `p2` yields better results.
+to search and select which between `p1` and `p2` yields better results.
 
 ### Installation
 Lale is in the Julia General package registry. The latest
@@ -70,7 +70,7 @@ Ycl  = iris[:,5]   |> Vector
 
 # lale ops
 pca     = laleoperator("PCA")
-rb      = laleoperator("RobustScaler","autogen")
+rb      = laleoperator("RobustScaler")
 noop    = laleoperator("NoOp","lale")
 rfr     = laleoperator("RandomForestRegressor")
 rfc     = laleoperator("RandomForestClassifier")
