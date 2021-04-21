@@ -9,8 +9,8 @@ using ..AbsTypes
 using ..LaleAbsTypes
 using ..Utils
 
-import ..AbsTypes: fit!, transform!
-import ..LaleAbsTypes: fit, transform, predict
+import ..AbsTypes: fit, fit!, transform, transform!
+import ..LaleAbsTypes: predict
 
 export fit!, transform!, fit, transform, predict
 export LaleOp, skops, autogenops, lalelibops
@@ -168,7 +168,7 @@ function lalelibops()
   println("Note: Consult Scikitlearn's online help for more details about the learner's arguments.")
 end
 
-function fit!(lale::LaleOp, xx::DataFrame, y::Vector=Vector())
+function fit!(lale::LaleOp, xx::DataFrame, y::Vector=Vector())::Nothing
   x = xx |> Array
   impl_args = copy(lale.model[:impl_args])
   learner = lale.model[:learner]
@@ -195,9 +195,16 @@ function fit!(lale::LaleOp, xx::DataFrame, y::Vector=Vector())
   end
   lale.model[:laleobj]   = trained
   lale.model[:impl_args] = impl_args
+  return nothing
 end
 
-function transform!(lale::LaleOp, xx::DataFrame)
+function fit(lale::LaleOp, xx::DataFrame, y::Vector=Vector())::LaleOp 
+   fit!(lale,xx,y)
+   lcopy =deepcopy(lale)
+   return lcopy
+end
+
+function transform!(lale::LaleOp, xx::DataFrame)::Union{DataFrame, Vector}
    x = deepcopy(xx)|> Array
    laleobj = lale.model[:laleobj]
    # transform is predict for learners
@@ -210,14 +217,10 @@ function transform!(lale::LaleOp, xx::DataFrame)
    end
 end
 
-function fit(lale::LaleOp, xx::DataFrame, y::Vector=Vector()) 
-   fit!(lale,xx,y)
-   lcopy =deepcopy(lale)
-   return lcopy
+function transform(lale::LaleOp, xx::DataFrame)::Union{DataFrame, Vector}
+   return transform!(lale,xx)
 end
 
-transform(lale::LaleOp, xx::DataFrame) = transform!(lale,xx)
-predict(lale::LaleOp, xx::DataFrame)   = transform!(lale,xx)
+predict(lale::LaleOp, xx::DataFrame)  = transform!(lale,xx)
 
 end
-
