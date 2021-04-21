@@ -5,7 +5,7 @@ using PyCall
 # load abstract super-types and utils
 using AMLPipelineBase
 using AMLPipelineBase.AbsTypes
-export fit!, transform!,fit_transform!
+export fit, fit!, transform, transform!, fit_transform!
 
 using AMLPipelineBase
 using AMLPipelineBase: AbsTypes, Utils, BaselineModels, Pipelines
@@ -41,8 +41,9 @@ module LaleAbsTypes
    export LaleOperator, fit, transform, predict, lalepropertynames
 
    abstract type LaleOperator <: Learner end
-   fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
-   transform(o::Machine, x::DataFrame) = transform!(o,x)
+
+   #fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
+   #transform(o::Machine, x::DataFrame) = transform!(o,x)
    predict(o::Machine, x::DataFrame) = transform!(o,x)
 
    lalepropertynames(o::PyObject) = ispynull(o) ? Symbol[] : map(x->Symbol(first(x)), PyIterator{PyObject}(pycall(inspect."getmembers", PyObject, o)))

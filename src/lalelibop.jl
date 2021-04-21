@@ -9,11 +9,10 @@ using ..AbsTypes
 using ..Utils
 using ..LaleAbsTypes
 
-import ..AbsTypes: fit!, transform!
-import ..LaleAbsTypes: fit, transform, predict
+import ..AbsTypes: fit, fit!, transform, transform!
+import ..LaleAbsTypes: predict
 
-export fit!, transform!
-export fit, transform, predict
+export fit, fit!, transform, transform!, predict
 
 import Base: >>,|,+,|>,&
 export  >>,|,+,|>,&
@@ -107,7 +106,7 @@ function lalepipeoptimizers()
   println("Note: Consult Lale online help for more details about the auto_configure arguments.")
 end
 
-function fit!(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector())
+function fit!(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector())::Nothing
    Xpd = Pandas.DataFrame(xx).pyo
    Ypd = Pandas.DataFrame(y).pyo
    margs = lopt.model[:impl_args]
@@ -115,19 +114,21 @@ function fit!(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector())
    hyperopt = LALELIBS.Hyperopt(estimator=pipe; margs...)
    trained = hyperopt.fit(Xpd,Ypd)
    lopt.model[:trained] = trained
+   return nothing
 end
 
-function transform!(lopt::LalePipeOptimizer, xx::DataFrame)
-   Xpd = Pandas.DataFrame(xx).pyo
-   trainedmodel = lopt.model[:trained]
-   trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1]
-end
-
-function fit(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector()) 
+function fit(lopt::LalePipeOptimizer, xx::DataFrame, y::Vector=Vector())::LalePipeOptimizer
    fit!(lopt,xx,y)
    loptcopy = deepcopy(lopt)
    return loptcopy
 end
+
+function transform!(lopt::LalePipeOptimizer, xx::DataFrame)::Vector
+   Xpd = Pandas.DataFrame(xx).pyo
+   trainedmodel = lopt.model[:trained]
+   trainedmodel.predict(Xpd) |> Pandas.DataFrame |> DataFrame |> x -> x[:,1] |> collect
+end
+
 
 transform(lopt::LalePipeOptimizer, xx::DataFrame) = transform!(lopt,xx)
 predict(lopt::LalePipeOptimizer, xx::DataFrame) = transform!(lopt,xx)
