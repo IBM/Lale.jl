@@ -67,10 +67,12 @@ Xcl  = iris[:,1:4] |> DataFrame
 Ycl  = iris[:,5]   |> Vector
 
 # regression dataset
-trXreg,trYreg,tstXreg,tstYreg = train_test_split(Xreg,Yreg; testprop=0.20)
+regsplit = train_test_split(Xreg,Yreg;testprop = 0.20)
+trXreg,trYreg,tstXreg,tstYreg = regsplit
 
 # classification dataset
-trXcl,trYcl,tstXcl,tstYcl = train_test_split(Xcl,Ycl; testprop=0.20)
+clsplit = train_test_split(Xcl,Ycl;testprop = 0.20)
+trXcl,trYcl,tstXcl,tstYcl = clsplit
 
 # lale ops
 pca     = laleoperator("PCA")
@@ -97,20 +99,20 @@ score(:accuracy,lalepred,tstYcl) |> println
 Moreover, Lale is also compatible with [AutoMLPipeline](https://github.com/IBM/AutoMLPipeline.jl) `@pipeline` syntax:
 ```julia
 # regression pipeline
-pipe         = @pipeline (pca + rb) |>  rfr
-model        = fit(pipe,trXreg, trYreg)
-pred         = transform(model,tstXreg)
+regpipe      = @pipeline (pca + rb) |>  rfr
+regmodel     = fit(regpipe,trXreg, trYreg)
+regpred      = transform(regmodel,tstXreg)
 regperf(x,y) = score(:rmse,x,y)
-regperf(pred, tstYreg) |> println
-crossvalidate(pipe,Xreg,Yreg,perf)
+regperf(regpred, tstYreg) |> println
+crossvalidate(regpipe,Xreg,Yreg,regperf)
 
 # classification pipeline
-pipe           = @pipeline (pca + noop) |>  rfc
-model          = fit(pipe,trXcl, trYcl)
-pred           = transform(model,tstXcl)
+clpipe         = @pipeline (pca + noop) |>  rfc
+clmodel        = fit(clpipe,trXcl, trYcl)
+clpred         = transform(clmodel,tstXcl)
 classperf(x,y) = score(:accuracy,x,y)
-classperf(pred, tstYcl) |> println
-crossvalidate(pipe,Xcl,Ycl,perf)
+classperf(clpred, tstYcl) |> println
+crossvalidate(clpipe,Xcl,Ycl,classperf)
 ```
 
 
