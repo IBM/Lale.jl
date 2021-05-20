@@ -10,11 +10,11 @@ using ..LaleAbsTypes
 using ..Utils
 
 import ..AbsTypes: fit, fit!, transform, transform!
-import ..LaleAbsTypes: predict
+import ..LaleAbsTypes: predict, pretty_print
 import ..LaleLibOps: LalePipe
 
 export fit!, transform!, fit, transform, predict
-export LaleOp, skops, autogenops, lalelibops
+export LaleOp, skops, autogenops, lalelibops, pretty_print
 
 const sk_dict = Dict{String,PyObject}() 
 const ag_dict = Dict{String,PyObject}() 
@@ -253,5 +253,10 @@ function transform(lale::LaleOp, xx::DataFrame)::Union{DataFrame, Vector}
 end
 
 predict(lale::LaleOp, xx::DataFrame)  = transform!(lale,xx)
+
+function pretty_print(lop::LaleOp;args...)
+~    lop.model[:laleobj].pretty_print(;args...)
+end
+
 
 end

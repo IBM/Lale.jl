@@ -42,12 +42,14 @@ module LaleAbsTypes
    using PyCall: PyIterator, inspect
 
    export LaleOperator, fit, transform, predict, lalepropertynames
+   export pretty_print
 
    abstract type LaleOperator <: Learner end
 
    #fit(o::Machine, x::DataFrame, y::Vector=Vector()) = fit!(o,x,y)
    #transform(o::Machine, x::DataFrame) = transform!(o,x)
    predict(o::Machine, x::DataFrame) = transform!(o,x)
+   pretty_print(o::LaleOperator,args...) = nothing
 
    lalepropertynames(o::PyObject) = ispynull(o) ? Symbol[] : map(x->Symbol(first(x)), PyIterator{PyObject}(pycall(inspect."getmembers", PyObject, o)))
 end

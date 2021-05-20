@@ -10,7 +10,7 @@ using ..Utils
 using ..LaleAbsTypes
 
 import ..AbsTypes: fit, fit!, transform, transform!
-import ..LaleAbsTypes: predict
+import ..LaleAbsTypes: predict, pretty_print
 
 export fit, fit!, transform, transform!, predict
 
@@ -142,18 +142,18 @@ function visualize(lopt::LalePipeOptimizer)
    best_pipeline.visualize(ipython_display=false)
 end
 
-function pretty_print(lopt::LalePipeOptimizer)
+function pretty_print(lopt::LalePipeOptimizer; args...)
    auto_trained = lopt.model[:trained]
    best_pipeline = auto_trained.get_pipeline()
-   _ipython_display(best_pipeline,show_imports=false)
+   best_pipeline.pretty_print(;args...)
 end
 
 function visualize(lpipe::LalePipe)
    lpipe.model[:laleobj].visualize(ipython_display=false)
 end
 
-function pretty_print(lpipe::LalePipe)
-   _ipython_display(lpipe.model[:laleobj],show_imports=false)
+function pretty_print(lop::LalePipe;args...)
+   lop.model[:laleobj].pretty_print(;args...)
 end
 
 end
