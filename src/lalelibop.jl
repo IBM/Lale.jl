@@ -18,15 +18,17 @@ import Base: >>,|,+,|>,&
 export  >>,|,+,|>,&
 
 export LalePipeOptimizer, lalepipeoptimizers
-export LalePipe, visualize
+export LalePipe, visualize, pretty_print
 
 const optim_dict    = Dict{String, PyObject}()
 const LALELIBS      = PyNULL()
 const LALEOPS       = PyNULL()
+const LALEPP        = PyNULL()
 
 function __init__()
    copy!(LALELIBS, pyimport("lale.lib.lale"))
    copy!(LALEOPS,  pyimport("lale.operators"))
+   copy!(LALEPP,  pyimport("lale.pretty_print"))
 
    optim_dict["Hyperopt"]     = LALELIBS.Hyperopt
    optim_dict["GridSearchCV"] = LALELIBS.GridSearchCV
@@ -35,6 +37,7 @@ function __init__()
    global _make_choice        = LALEOPS.make_choice
    global _make_union         = LALEOPS.make_union
    global _make_union_nc      = LALEOPS.make_union_no_concat
+   global _ipython_display    = LALEPP.ipython_display
 end
 
 # hide pyobject
@@ -139,8 +142,18 @@ function visualize(lopt::LalePipeOptimizer)
    best_pipeline.visualize(ipython_display=false)
 end
 
+function pretty_print(lopt::LalePipeOptimizer)
+   auto_trained = lopt.model[:trained]
+   best_pipeline = auto_trained.get_pipeline()
+   _ipython_display(best_pipeline,show_imports=false)
+end
+
 function visualize(lpipe::LalePipe)
    lpipe.model[:laleobj].visualize(ipython_display=false)
+end
+
+function pretty_print(lpipe::LalePipe)
+   _ipython_display(lpipe.model[:laleobj],show_imports=false)
 end
 
 end

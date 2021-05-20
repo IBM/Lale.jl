@@ -11,6 +11,7 @@ using ..Utils
 
 import ..AbsTypes: fit, fit!, transform, transform!
 import ..LaleAbsTypes: predict
+import ..LaleLibOps: LalePipe
 
 export fit!, transform!, fit, transform, predict
 export LaleOp, skops, autogenops, lalelibops
@@ -18,19 +19,23 @@ export LaleOp, skops, autogenops, lalelibops
 const sk_dict = Dict{String,PyObject}() 
 const ag_dict = Dict{String,PyObject}() 
 const ll_dict = Dict{String,PyObject}() 
+const mb_dict = Dict{String,PyObject}() 
 const SK   = PyNULL()
 const AG   = PyNULL()
 const LL   = PyNULL()
+const MB   = PyNULL()
 
 include("sklearn-const.jl") # SKVec
 include("autogen-const.jl") # AGVec
 include("liblale-const.jl") # LLVec
+include("imblearn-const.jl") # MBVec
 
 
 function __init__()
    copy!(SK, pyimport("lale.lib.sklearn"))
    copy!(AG, pyimport("lale.lib.autogen"))
    copy!(LL, pyimport("lale.lib.lale"))
+   copy!(MB, pyimport("lale.lib.imblearn"))
 
    for lr in SKVec
       sk_dict[lr] = SK
@@ -40,6 +45,9 @@ function __init__()
    end
    for lr in LLVec
       ll_dict[lr] = LL
+   end
+   for lr in MBVec
+      mb_dict[lr] = MB
    end
 end
 
@@ -89,6 +97,13 @@ mutable struct LaleOp <: LaleOperator
             lalelibops()
             throw(ArgumentError("Argument keyword error"))
          end
+      elseif type == "imblearn"
+         if !(lr in keys(mb_dict)) 
+            println("$lr is not supported.") 
+            println()
+            lalelibops()
+            throw(ArgumentError("Argument keyword error"))
+         end
       else
          throw(ArgumentError("Argument keyword error"))
       end
@@ -101,6 +116,8 @@ mutable struct LaleOp <: LaleOperator
          py_learner = getproperty(ag_dict[learner],learner)
       elseif type == "lale"
          py_learner = getproperty(ll_dict[learner],learner)
+      elseif type == "imblearn"
+         py_learner = getproperty(mb_dict[learner],learner)
       else
          throw(ArgumentError("$learner not found"))
       end
@@ -114,6 +131,13 @@ function (x::LaleOp)(;args...)
    pr = pyobj(;args...)
    x.model[:laleobj] = pr
    return x
+end
+
+function (x::LaleOp)(pipe::LalePipe,args...) 
+   pyobj = x.model[:laleobj]
+   lpipe = pipe.model[:laleobj]
+   pr = pyobj(operator=lpipe;args...) |> LalePipe
+   return pr
 end
 
 function LaleOp(learner::String, args::Dict)
