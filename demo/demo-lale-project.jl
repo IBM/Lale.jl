@@ -20,7 +20,7 @@ X = df[:,2:end]
 train_X,train_y,test_X,test_y = Lale.train_test_split(X, y,testprop=0.20)
 
 prep_to_numbers = 
- ((stringprj >> OneHotEncoder(handle_unknown = "ignore")) & numericprj )>> ConcatFeatures
+ ((strfeat >> OneHotEncoder(handle_unknown = "ignore")) & numfeat)>> ConcatFeatures
 planned_orig = prep_to_numbers >> ( Tree | KNN)
 lopt = LalePipeOptimizer(planned_orig,max_evals = 10,cv = 3)
 laletrained = fit(lopt,train_X,train_y)
