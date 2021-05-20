@@ -109,6 +109,13 @@ mutable struct LaleOp <: LaleOperator
    end
 end
 
+function (x::LaleOp)(;args...) 
+   pyobj = x.model[:laleobj]
+   pr = pyobj(;args...)
+   x.model[:laleobj] = pr
+   return x
+end
+
 function LaleOp(learner::String, args::Dict)
    LaleOp(Dict(:learner => learner,:name=>learner, args...))
 end
