@@ -3,7 +3,7 @@ all_X, all_y, fairness_info = fetch_creditg_df()
 
 import pandas as pd
 pd.options.display.max_columns = None
-pd.concat([all_y, all_X], axis=1)
+df = pd.concat([all_y, all_X], axis=1)
 
 import lale.pretty_print
 lale.pretty_print.ipython_display(fairness_info)
