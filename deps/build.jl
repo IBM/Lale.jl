@@ -2,11 +2,11 @@ import PyCall: pyimport
 
 function installmaclinux()
    # See https://stackoverflow.com/questions/12332975/installing-python-module-within-code.
-   PIP_PACKAGES = ["lale"]
-   try
-      pyimport("lale")
-      @info "lale succesfully installed"
-   catch
+   PIP_PACKAGES = ["lale","aif360","fairlearn","cvxpy"]
+   #try
+   #   pyimport("lale")
+   #   @info "lale succesfully installed"
+   #catch
       try
          sys = pyimport("sys")
          subprocess = pyimport("subprocess")
@@ -15,7 +15,7 @@ function installmaclinux()
       catch
          println("lale failed to install")
       end
-   end
+   #end
 end
 
 function installwindows()
