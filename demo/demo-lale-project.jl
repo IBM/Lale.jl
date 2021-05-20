@@ -1,41 +1,34 @@
-using PyCall
-using Pandas
+using Lale
+using DataFrames
+using CSV
 
-sklearn = pyimport("sklearn")
-pd = pyimport("pandas")
-lsk = pyimport("lale.lib.sklearn")
-llale = pyimport("lale.lib.lale")
-Project = llale.Project
-OneHotEncoder = lsk.OneHotEncoder
-ConcatFeatures = llale.ConcatFeatures
-Tree = lsk.DecisionTreeClassifier
-KNN = lsk.KNeighborsClassifier
-RF =  lsk.RandomForestClassifier
-PCA = lsk.PCA
-Hyperopt = llale.Hyperopt
+strfeat= laleoperator("Project","lale")(columns=Dict("type"=>"string"))
+numfeat = laleoperator("Project","lale")(columns=Dict("type"=>"number"))
 
-train_test_split = pyimport("sklearn.model_selection").train_test_split
-mean_squared_error = pyimport("sklearn.metrics").mean_squared_error
-metrics = pyimport("sklearn.metrics")
-accuracy_scorer = metrics.make_scorer(sklearn.metrics.accuracy_score)
+OneHotEncoder = laleoperator("OneHotEncoder")
+ConcatFeatures = laleoperator("ConcatFeatures","lale")
+Tree = laleoperator("DecisionTreeClassifier")
+KNN = laleoperator("KNeighborsClassifier")
+RF =  laleoperator("RandomForestClassifier")
+PCA = laleoperator("PCA")
+Hyperopt = laleoperator("Hyperopt","lale")
 
-df = Pandas.read_csv("credit.csv")
-r,c = size(df)
-y = df["class"].pyo
-X = iloc(df)[1:r,2:c]
+df = CSV.read("./demo/old/credit.csv",DataFrame) 
+y = df[!,"class"] |> collect
+X = df[:,2:end]
 
-train_X, test_X, train_y, test_y = train_test_split(X, y)
+train_X,train_y,test_X,test_y = Lale.train_test_split(X, y,testprop=0.20)
 
-prep_to_numbers = (
-  (Project(columns=Dict("type"=>"string")) >> OneHotEncoder(handle_unknown = "ignore")) &
-  Project(columns=Dict("type"=>"number")) )>> ConcatFeatures
+prep_to_numbers = 
+ ((stringprj >> OneHotEncoder(handle_unknown = "ignore")) & numericprj )>> ConcatFeatures
 planned_orig = prep_to_numbers >> ( Tree | KNN)
-
-best_estimator = planned_orig.auto_configure(
-    train_X, train_y, optimizer=Hyperopt, cv=3, max_evals=10)
-println("accuracy = $(accuracy_scorer(best_estimator, test_X, test_y))")
+lopt = LalePipeOptimizer(planned_orig,max_evals = 10,cv = 3)
+laletrained = fit(lopt,train_X,train_y)
+lalepred  = Lale.transform(laletrained,test_X)
+score(:accuracy,lalepred,test_y) |> println
 
 pca_tree_planned = prep_to_numbers >> PCA >> RF
-pca_tree_trained = pca_tree_planned.auto_configure(
-    train_X, train_y, optimizer=Hyperopt, cv=3, max_evals=10, verbose=true)
-println("accuracy = $(accuracy_scorer(pca_tree_trained, test_X, test_y))")
+lopt = LalePipeOptimizer(pca_tree_planned,max_evals = 10,cv = 3)
+laletrained = fit(lopt,train_X,train_y)
+lalepred  = Lale.transform(laletrained,test_X)
+score(:accuracy,lalepred,test_y) |> println
