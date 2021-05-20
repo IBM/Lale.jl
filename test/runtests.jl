@@ -13,5 +13,7 @@ include("test_autogen.jl")
 include("test_lalepreprocessing.jl")
 include("test_laleoptimizer_sk.jl")
 include("test_laleoptimizer_ag.jl")
+include("test_imblearn.jl")
+include("test_project.jl")
 
 end
