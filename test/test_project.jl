@@ -18,7 +18,7 @@ function proj_test()
    PCA = laleoperator("PCA")
    Hyperopt = laleoperator("Hyperopt","lale")
 
-   df = CSV.read("./demo/old/credit.csv",DataFrame) 
+   df = CSV.read(joinpath(dirname(pathof(Lale)),"../demo/old/credit.csv"),DataFrame) 
    y = df[!,"class"] |> collect
    X = df[:,2:end]
 
