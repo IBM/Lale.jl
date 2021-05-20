@@ -2,7 +2,7 @@ import PyCall: pyimport
 
 function installmaclinux()
    # See https://stackoverflow.com/questions/12332975/installing-python-module-within-code.
-   PIP_PACKAGES = ["lale"]
+   PIP_PACKAGES = ["lale","imbalanced-learn","imblearn"]
    try
       pyimport("lale")
       @info "lale succesfully installed"

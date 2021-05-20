@@ -54,15 +54,15 @@ end
 
 using .LaleAbsTypes
 
-include("laleop.jl")
-using .LaleOps
-export LaleOp, skops, autogenops, lalelibops
-
 include("lalelibop.jl")
 using .LaleLibOps
 export LalePipeOptimizer, lalepipeoptimizers
-export LalePipe, visualize
+export LalePipe, visualize, pretty_print
 export >>, +, |, |>, &
+
+include("laleop.jl")
+using .LaleOps
+export LaleOp, skops, autogenops, lalelibops
 
 export laleoperator
 export fit!, transform!, fit, transform, predict
@@ -75,6 +75,7 @@ function laleoperator(name::String,type::String="sklearn"; args...)
       sk = keys(LaleOps.sk_dict)
       ag = keys(LaleOps.ag_dict)
       ll = keys(LaleOps.ll_dict)
+      mb = keys(LaleOps.mb_dict)
       println("Please choose among these pipeline elements:")
       println()
       println("sklearn: ", [sk...])
@@ -82,6 +83,8 @@ function laleoperator(name::String,type::String="sklearn"; args...)
       println("autogen: ", [ag...])
       println()
       println("lale: ",    [ll...])
+      println()
+      println("imblearn: ",[mb...])
       println()
       throw(ArgumentError("$name does not exist"))
    end
