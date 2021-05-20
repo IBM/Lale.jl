@@ -64,7 +64,7 @@ export >>, +, |, |>, &
 
 include("laleop.jl")
 using .LaleOps
-export LaleOp, skops, autogenops, lalelibops
+export LaleOp, skops, autogenops, lalelibops, lalesummary
 
 export laleoperator
 export fit!, transform!, fit, transform, predict

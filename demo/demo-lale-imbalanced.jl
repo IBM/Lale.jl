@@ -20,32 +20,32 @@ accuracy_score=pyimport("sklearn.metrics").accuracy_score
 Hyperopt = laleoperator("Hyperopt","lale")
 
 pipeline_without_correction =  MinMaxScaler() >> PCA() >> RF()
-optimizer = Hyperopt(estimator=pipeline_without_correction.model[:laleobj], max_evals = 10, scoring="roc_auc")
+optimizer = Hyperopt(pipeline_without_correction, max_evals = 10, scoring="roc_auc")
 trained_optimizer = fit(optimizer,train_X, train_y)
 predictions = predict(trained_optimizer,test_X)
-trained_optimizer.model[:laleobj].summary()
+lalesummary(trained_optimizer)
 score(:accuracy,test_y,predictions)
 
 # SMOTE
 pipeline_with_correction =  SMOTE(MinMaxScaler() >> PCA() >> RF())
-optimizer = Hyperopt(estimator=pipeline_with_correction.model[:laleobj], max_evals = 10, scoring="roc_auc")
+optimizer = Hyperopt(pipeline_with_correction, max_evals = 10, scoring="roc_auc")
 trained_optimizer = fit(optimizer,train_X, train_y)
 predictions = predict(trained_optimizer,test_X)
-trained_optimizer.model[:laleobj].summary()
+lalesummary(trained_optimizer)
 score(:accuracy,test_y,predictions)
 
 # CondensedNearestNeighbour
 pipeline_with_correction =  CondensedNearestNeighbour(MinMaxScaler() >> PCA() >> RF())
-optimizer = Hyperopt(estimator=pipeline_with_correction.model[:laleobj], max_evals = 10, scoring="roc_auc")
+optimizer = Hyperopt(pipeline_with_correction, max_evals = 10, scoring="roc_auc")
 trained_optimizer = fit(optimizer,train_X, train_y)
 predictions = predict(trained_optimizer,test_X)
-trained_optimizer.model[:laleobj].summary()
+lalesummary(trained_optimizer)
 score(:accuracy,test_y,predictions)
 
 # SMOTEENN
 pipeline_with_correction =  SMOTEENN(MinMaxScaler() >> PCA() >> RF())
-optimizer = Hyperopt(estimator=pipeline_with_correction.model[:laleobj], max_evals = 10, scoring="roc_auc")
+optimizer = Hyperopt(pipeline_with_correction, max_evals = 10, scoring="roc_auc")
 trained_optimizer = fit(optimizer,train_X, train_y)
 predictions = predict(trained_optimizer,test_X)
-trained_optimizer.model[:laleobj].summary()
+lalesummary(trained_optimizer)
 score(:accuracy,test_y,predictions)

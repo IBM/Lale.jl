@@ -9,12 +9,12 @@ using ..AbsTypes
 using ..LaleAbsTypes
 using ..Utils
 
-import ..AbsTypes: fit, fit!, transform, transform!
+import ..AbsTypes: fit, fit!, transform, transform!, lalepropertynames
 import ..LaleAbsTypes: predict, pretty_print
 import ..LaleLibOps: LalePipe
 
 export fit!, transform!, fit, transform, predict
-export LaleOp, skops, autogenops, lalelibops, pretty_print
+export LaleOp, skops, autogenops, lalelibops, pretty_print, lalesummary
 
 const sk_dict = Dict{String,PyObject}() 
 const ag_dict = Dict{String,PyObject}() 
@@ -133,11 +133,18 @@ function (x::LaleOp)(;args...)
    return x
 end
 
-function (x::LaleOp)(pipe::LalePipe,args...) 
+# check if operator is Hyperopt or SMOTE,etc
+function (x::LaleOp)(pipe::LalePipe; args...) 
    pyobj = x.model[:laleobj]
    lpipe = pipe.model[:laleobj]
-   pr = pyobj(operator=lpipe;args...) |> LalePipe
-   return pr
+   if x.model[:learner] == "Hyperopt"
+      pr = pyobj(estimator=lpipe;args...) 
+      x.model[:laleobj] = pr
+      return x
+   else #imbalance operator
+      pr = pyobj(operator=lpipe;args...) |> LalePipe
+      return pr
+   end
 end
 
 function LaleOp(learner::String, args::Dict)
@@ -256,6 +263,15 @@ predict(lale::LaleOp, xx::DataFrame)  = transform!(lale,xx)
 
 function pretty_print(lop::LaleOp;args...)
 ~    lop.model[:laleobj].pretty_print(;args...)
+end
+
+function lalesummary(op::LaleOp)
+   pyobject = op.model[:laleobj]
+   if :summary ∈ lalepropertynames(pyobject)
+      pyobject.summary()
+   else
+      nothing
+   end
 end
 
 
