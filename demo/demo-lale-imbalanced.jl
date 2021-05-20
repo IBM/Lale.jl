@@ -20,10 +20,10 @@ accuracy_score=pyimport("sklearn.metrics").accuracy_score
 Hyperopt = laleoperator("Hyperopt","lale")
 
 pipeline_without_correction =  MinMaxScaler() >> PCA() >> RF()
-optimizer = LalePipeOptimizer(pipeline_without_correction, max_evals = 10, scoring="roc_auc")
+optimizer = Hyperopt(estimator=pipeline_without_correction.model[:laleobj], max_evals = 10, scoring="roc_auc")
 trained_optimizer = fit(optimizer,train_X, train_y)
 predictions = predict(trained_optimizer,test_X)
-trained_optimizer.model[:trained].summary()
+trained_optimizer.model[:laleobj].summary()
 score(:accuracy,test_y,predictions)
 
 # SMOTE
@@ -33,8 +33,6 @@ trained_optimizer = fit(optimizer,train_X, train_y)
 predictions = predict(trained_optimizer,test_X)
 trained_optimizer.model[:laleobj].summary()
 score(:accuracy,test_y,predictions)
-
-
 
 # CondensedNearestNeighbour
 pipeline_with_correction =  CondensedNearestNeighbour(MinMaxScaler() >> PCA() >> RF())
