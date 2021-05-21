@@ -126,10 +126,12 @@ mutable struct LaleOp <: LaleOperator
    end
 end
 
+# initialized laleobject and pass the args for fit
 function (x::LaleOp)(;args...) 
    pyobj = x.model[:laleobj]
    pr = pyobj(;args...)
    x.model[:laleobj] = pr
+   x.model[:impl_args]=Dict(pairs(args))
    return x
 end
 
@@ -137,11 +139,12 @@ end
 function (x::LaleOp)(pipe::LalePipe; args...) 
    pyobj = x.model[:laleobj]
    lpipe = pipe.model[:laleobj]
-   if x.model[:learner] == "Hyperopt"
+   if x.model[:learner] == "Hyperopt" # use estimator arg
       pr = pyobj(estimator=lpipe;args...) 
       x.model[:laleobj] = pr
+      x.model[:impl_args]=Dict(pairs(args))
       return x
-   else #imbalance operator
+   else #imbalance operator, use operator arg
       pr = pyobj(operator=lpipe;args...) |> LalePipe
       return pr
    end
