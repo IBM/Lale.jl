@@ -63,6 +63,11 @@ function skptest()
     fit!(pca,features)
     @test transform(pca,features) |> x->size(x,2) == 3
 
+    pca = LaleOp("PCA","sklearn")
+    pca = pca(n_components=3)
+    fit!(pca,features)
+    @test transform(pca,features) |> x->size(x,2) == 3
+
     pca = LaleOp("PCA","autogen")
     fit!(pca,features)
     @test transform(pca,features) |> x->size(x,2) == 7
