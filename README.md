@@ -7,7 +7,7 @@
 ---------
 Lale.jl is a Julia wrapper of Python's [Lale](https://github.com/ibm/lale) library for semi-automated data science. Lale makes it easy to automatically select algorithms and tune hyperparameters of pipelines that are compatible with scikit-learn, in a type-safe fashion.
 
-More details of Lale: [AutoML@KDD](https://arxiv.org/abs/2007.01977)
+More details of Lale: [Lale AutoML@KDD](https://arxiv.org/abs/2007.01977)
 
 Instructions for Lale developers can be found [here](./docs/DevInstruction.md).
 
